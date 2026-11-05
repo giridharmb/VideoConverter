@@ -18,11 +18,13 @@ flowchart TB
         Probe["Inspection tasks\nMaximum 2"]
         Convert["Conversion tasks\n1–8 slots, paused jobs retain a slot"]
         Save["QueuePersistence actor\nAtomic JSON + rotating logs"]
+        SQL["TelemetryDatabase actor\nBatched SQLite WAL transactions"]
         Telemetry["TelemetrySampler\nCPU, memory, I/O, threads, thermal, disk"]
         Snapshots["EngineSnapshot stream\nNewest snapshot only"]
         Engine --> Probe
         Engine --> Convert
         Engine --> Save
+        Engine --> SQL
         Engine --> Telemetry
         Engine --> Snapshots
     end
@@ -38,6 +40,7 @@ flowchart TB
     FFmpeg -->|"Progress and diagnostics"| Runner
     Runner -->|"Bounded events"| Engine
     Snapshots -->|"Coalesced updates"| Store
+    SQL --> History["Local sessions, attempts, logs, metrics and timings"]
     Telemetry -.->|"Sample live app and worker PIDs"| FFmpeg
 ```
 
@@ -146,7 +149,7 @@ flowchart LR
     Reap --> Release["Release task, slot and reservation"]
     Quit["Normal application quit"] --> Drain["Stop command ingress\nDrain accepted commands"]
     Drain --> Cancel
-    Release --> Persist["Flush queue and logs\nComplete normal quit if requested"]
+    Release --> Persist["Await ticker and burst flusher\nFlush JSON, text and SQLite; end session"]
 ```
 
 A remembered pause applies even when requested before process launch. Every retry uses a fresh controller. A hard crash cannot execute graceful shutdown, and persisted PIDs are never used as authority to signal a process after relaunch.
@@ -181,8 +184,13 @@ flowchart TB
     Rates --> Metrics["300 metric samples\nAbout one every 0.9 seconds"]
     OS["Thermal state + destination free space"] --> Metrics
     Progress["FFmpeg stdout progress"] --> Parser["ProgressParser\nTime, FPS, speed, bytes, ETA"]
-    Errors["FFmpeg stderr + application events"] --> Logs["2,000 live log entries\nBounded event and capture buffers"]
-    Logs --> Disk["Rotating disk logs\nAbout 5 MiB + one previous file"]
+    Errors["FFmpeg stderr + application events"] --> Batch["Up to 16 lines per stderr event\n256 events per worker"]
+    Batch --> Logs["2,000 live log entries\nLoss counters for bounded ingestion"]
+    Batch --> Pending["4,096 pending log entries\nOne burst flusher starts at 512"]
+    Pending --> Disk["Rotating disk logs\nAbout 5 MiB + one previous file"]
+    Pending --> SQL["TelemetryDatabase actor\nSQLite WAL history"]
+    Metrics --> SQL
+    Timing["Job phases + command, UI and flush timings"] --> SQL
     Metrics --> Snapshot["Engine snapshot"]
     Parser --> Snapshot
     Logs --> Snapshot

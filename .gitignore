@@ -18,3 +18,9 @@ Resources/Tools/*
 __pycache__/
 # Local log screenshot includes machine-specific filesystem paths.
 /Documentation/Images/logs.png
+*.sqlite
+*.sqlite-wal
+*.sqlite-shm
+*.db
+*.db-wal
+*.db-shm

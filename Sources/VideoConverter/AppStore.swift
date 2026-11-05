@@ -15,7 +15,12 @@ enum WorkspaceTab: String, CaseIterable, Identifiable {
 final class AppStore: ObservableObject {
     @Published var snapshot = EngineSnapshot()
     @Published var selection: Set<UUID> = []
-    @Published var tab: WorkspaceTab = .queue
+    @Published var tab: WorkspaceTab = .queue {
+        didSet {
+            let name = tab.rawValue
+            Task { await engine.recordPerformance(name: "ui_tab", durationMs: 0, detail: name) }
+        }
+    }
     @Published var settings = ConversionSettings()
     @Published var feedback: String?
     @Published var search = ""
@@ -23,10 +28,11 @@ final class AppStore: ObservableObject {
     @Published var toolDirectory = ""
     @Published var preset: ConversionPreset = .balanced
     @Published var isShuttingDown = false
-    let engine = ConversionEngine()
+    let engine = ConversionEngine(sessionLabel: ProcessInfo.processInfo.environment["VIDEOCONVERTER_SESSION_LABEL"] ?? "application")
     private let commands: AsyncStream<AppCommand>.Continuation
     private var commandTask: Task<Void, Never>?
     private var snapshotTask: Task<Void, Never>?
+    private var heartbeatTask: Task<Void, Never>?
     var activeJobs: [ConversionJob] { snapshot.jobs.filter { $0.state.isActive } }
     var selectedJobs: [ConversionJob] { snapshot.jobs.filter { selection.contains($0.id) } }
     var visibleJobs: [ConversionJob] {
@@ -43,9 +49,22 @@ final class AppStore: ObservableObject {
             for await snapshot in engine.snapshots {
                 guard let self else { return }
                 self.snapshot = snapshot
-                self.selection.formIntersection(Set(snapshot.jobs.map(\.id)))
+                let pruned = self.selection.intersection(Set(snapshot.jobs.map(\.id)))
+                if pruned != self.selection { self.selection = pruned }
                 let active = snapshot.jobs.filter { $0.state == .running }.count
-                NSApp.dockTile.badgeLabel = active > 0 ? "\(active)" : nil
+                let badge = active > 0 ? "\(active)" : nil
+                if NSApp.dockTile.badgeLabel != badge { NSApp.dockTile.badgeLabel = badge }
+                let deliveryMs = max(0, Date().timeIntervalSince(snapshot.publishedAt) * 1000)
+                Task { await engine.recordPerformance(name: "ui_snapshot_delivery", durationMs: deliveryMs) }
+            }
+        }
+        heartbeatTask = Task {
+            while !Task.isCancelled {
+                let start = ProcessInfo.processInfo.systemUptime
+                try? await Task.sleep(for: .milliseconds(100))
+                guard !Task.isCancelled else { return }
+                let delay = max(0, (ProcessInfo.processInfo.systemUptime - start) * 1000 - 100)
+                await engine.recordPerformance(name: "ui_heartbeat_lag", durationMs: delay)
             }
         }
         send(.initialize)
@@ -112,6 +131,7 @@ final class AppStore: ObservableObject {
     }
     func shutdown() async {
         isShuttingDown = true
+        heartbeatTask?.cancel()
         commands.finish()
         // Drain accepted commands before shutdown, so a delayed click cannot restart a worker.
         await commandTask?.value

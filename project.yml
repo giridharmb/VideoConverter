@@ -16,6 +16,8 @@ targets:
     type: framework
     platform: macOS
     sources: [Sources/ConverterCore]
+    dependencies:
+      - sdk: libsqlite3.tbd
     settings:
       base:
         GENERATE_INFOPLIST_FILE: YES

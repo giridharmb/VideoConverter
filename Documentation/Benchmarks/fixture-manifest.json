@@ -1,0 +1,48 @@
+{
+  "target_bytes": 1000000,
+  "tolerance_fraction": 0.05,
+  "duration_seconds": 8,
+  "generator": "lavfi testsrc2 + 440 Hz sine, 640x360, 30 fps, 48 kHz mono",
+  "fixtures": [
+    {
+      "file": "fixture_h264.mp4",
+      "bytes": 977679,
+      "video_encoder": "libx264",
+      "audio_encoder": "aac",
+      "duration": 8.0,
+      "sha256": "e33c8ca827c328bc1c76249090d26b014500a486fdd4479fa9246b428a3b4736"
+    },
+    {
+      "file": "fixture_hevc.mkv",
+      "bytes": 978608,
+      "video_encoder": "libx265",
+      "audio_encoder": "aac",
+      "duration": 8.021,
+      "sha256": "33a410e042582fe325682ff93cc8d1658a889231b320e3949dab3afb8610c40d"
+    },
+    {
+      "file": "fixture_h264.mov",
+      "bytes": 977730,
+      "video_encoder": "libx264",
+      "audio_encoder": "aac",
+      "duration": 8.0,
+      "sha256": "22dc37471e2cfd09cd0d5ebb5d16dc6e0e031951609b09e06c56f0fff59be571"
+    },
+    {
+      "file": "fixture_vp9.webm",
+      "bytes": 983608,
+      "video_encoder": "libvpx-vp9",
+      "audio_encoder": "libopus",
+      "duration": 8.008,
+      "sha256": "641de61b6659821ad2730ee4ad461fc98007ca5f71738463070012934bd427bf"
+    },
+    {
+      "file": "fixture_mpeg4.avi",
+      "bytes": 1037672,
+      "video_encoder": "mpeg4",
+      "audio_encoder": "libmp3lame",
+      "duration": 8.04,
+      "sha256": "596166cbd3cab398e609955606e57bda4dc027829244d39326bf9aea79e27e52"
+    }
+  ]
+}

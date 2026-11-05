@@ -8,6 +8,8 @@ This is a native macOS 14+ SwiftUI application written in Swift 6. The objective
 
 ## Build and test
 
+Read `Documentation/TELEMETRY.md` for the SQLite schema, timing definitions, retention and backup rules, and `Documentation/STRESS_RESULTS.md` for measured results and limitations. Headless engine timings are not GUI frame-time measurements.
+
 ```sh
 swift test
 xcodebuild -project VideoConverter.xcodeproj -scheme VideoConverter \
@@ -32,6 +34,10 @@ FFmpeg integration tests use the installed tools and generate their own temporar
 10. Restore interrupted jobs as failed/manual-retry and never auto-start a saved queue. Preserve unreadable queue data rather than overwriting it. Handle Codable/schema compatibility when adding fields.
 11. Metrics represent real process counters. Distinguish app and worker CPU/memory, document units and unavailable counters, and retain bounded history. Do not imply GPU/network/power metrics exist when they do not.
 12. Keep the UI accessible and native: labels, keyboard commands, text selection for diagnostics, status text as well as color, scrollable settings, nonmodal file-panel callbacks, and system appearance support.
+13. `TelemetryDatabase` owns its SQLite connection on an actor. Bind values, reuse prepared statements per batch, keep WAL transactions and busy waits short, and never query SQL in a view. Diagnostic persistence failure must not cancel conversion; JSON queue recovery remains authoritative.
+14. Surface process-stream, buffer and database losses. Record retries as separate attempts; preserve monotonic phase timings on failures/cancellation. Never remove output verification to improve benchmark numbers. Invalid/nonfinite settings must remain loggable without dropping unrelated diagnostics.
+15. Publish idle snapshots only for changed data. Chart equality assumes append-only metric history with a new timestamp for each sample. Update that contract if samples become mutable. Avoid assigning unchanged selection/Dock values on every snapshot.
+16. Keep the worker stream (256 events), stderr batches (16 lines), pending logs (4,096) and one burst flusher (threshold 512) bounded. Count lost stderr lines, not just batch envelopes. Shutdown must await ticker/flusher work and persist pending logs, not substitute the smaller live-view ring. Retention must preserve the current writer's session beyond 30 days.
 
 ## Where changes belong
 
@@ -42,6 +48,8 @@ FFmpeg integration tests use the installed tools and generate their own temporar
 - Probing: `MediaProbe.swift`; preserve timeout behavior and optional JSON field handling.
 - Recovery and disk logs: `QueuePersistence.swift`.
 - OS counters: `Telemetry.swift`.
+- SQLite history: `TelemetryDatabase.swift`; version and migrate existing schemas rather than dropping/recreating user data. The optional job timings field keeps older JSON queues readable.
+- Stress tools: `Sources/ConverterStress` and `Scripts/{make-stress-fixtures,run-stress-matrix,analyze-telemetry}.py`.
 - Presentation/native panels: `Sources/VideoConverter`; UI does not own worker processes.
 - Packaging: `Scripts/bundle-ffmpeg.py` and `project.yml`.
 
@@ -54,5 +62,9 @@ The worker-process integration is intentional: FFmpeg's libraries run in child p
 Do not claim the app is distribution-ready. Signing, notarization, sandbox redesign for the App Store, architecture validation, and FFmpeg/dependency license obligations require their own release work. Keep `Documentation/DISTRIBUTION.md` accurate when packaging changes.
 
 ## Finishing a change
+
+SQLite is the macOS system library (`SQLite3`/`libsqlite3`), not a downloaded dependency. Do not commit database/WAL/SHM files, synthetic media, raw logs or raw metrics. Back up a live database with SQLite's backup API or `.backup`, not a standalone file copy. Public reports contain only reviewed path-free summaries and synthetic fixture manifests.
+
+For performance changes, use Release builds and identical fixtures/negative controls. Run benchmark scenarios sequentially; do not compile or render docs during timed batches. Interleave thread comparisons with `--threads 0 2 --repeat 3`. Report source-size tolerance, host/thermal state, repetitions, cache effects, expected negative failures, telemetry losses and the GUI/headless distinction. CRF is not a fixed compression ratio; size alone does not measure output quality.
 
 Run appropriate core tests and the Xcode build/test scheme. For UI changes, launch the app and inspect affected screens in light/dark appearance and at the minimum window size when practical. Report what was actually verified and any skipped integration tests. Update the user-facing documentation when workflow, supported features or limitations change.

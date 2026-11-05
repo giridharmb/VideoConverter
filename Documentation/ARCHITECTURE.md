@@ -17,6 +17,7 @@ ConversionEngine actor
     │      └── ProcessRunner → dispatch worker + stdout/stderr readers
     │             └── FFmpeg / ffprobe + their native libraries
     ├── QueuePersistence actor → atomic queue writes + rotating logs
+    ├── TelemetryDatabase actor → batched SQLite WAL history
     ├── TelemetrySampler → macOS process counters
     └── AsyncStream<EngineSnapshot> (newest only)
                        ▼
@@ -36,6 +37,7 @@ This is a small model/view/store design with an actor scheduler and immutable sn
 | `ConversionEngine.swift` | Single owner of all job state, scheduler, command dispatch, worker/event lifecycle, output commit and reservations |
 | `QueuePersistence.swift` | Versioned JSON recovery, atomic writes and rotating disk logs |
 | `Telemetry.swift` | Process CPU/memory/I/O/thread deltas, thermal state and filesystem free space |
+| `TelemetryDatabase.swift` | Actor-confined SQLite sessions/attempts/logs/samples/operations, bound transactions and retention |
 | `Sources/VideoConverter/AppStore.swift` | MainActor observable adapter, FIFO ingress, dialogs, exports and persisted UI defaults |
 | `VideoConverterApp.swift` | App entry, menus, graceful quit |
 | `ContentView.swift` | Navigation and shared native UI components |
@@ -49,7 +51,7 @@ Button actions update small UI state or enqueue a value into `AsyncStream`. `App
 
 The engine actor runs independently of MainActor. Queue state never leaks as shared mutable references. It publishes value snapshots at most about every 300 ms for streaming updates, with immediate snapshots for command/state changes. The snapshot stream keeps only its newest snapshot; a slow UI does not build an unbounded backlog. Parsing/logging does not create a new MainActor task for every FFmpeg line.
 
-`Process.waitUntilExit`, pipe reads, and reader joins are blocking APIs. They run on GCD utility workers, not on MainActor or inside the Swift cooperative executor. stdout and stderr are drained independently to avoid pipe deadlock. Launch uses argument arrays and closed stdin. The conversion event stream is bounded at 2,000 events; the two pipe readers can interleave stdout/stderr events, while each individual pipe's line order is preserved.
+`Process.waitUntilExit`, pipe reads, and reader joins are blocking APIs. They run on GCD utility workers, not on MainActor or inside the Swift cooperative executor. stdout and stderr are drained independently to avoid pipe deadlock. Launch uses argument arrays and closed stdin. Stderr travels in batches of up to 16 lines, capped at 8,192 characters per line before entering the 256-event-per-worker stream. Stdout progress remains line-based. The two readers can interleave events, while each pipe's line order is preserved. Dropped batches count their constituent lines; discarded progress events count individually.
 
 The engine's scheduled task starts long work and returns; subsequent UI commands can cancel, pause or adjust future jobs while workers run. One operation that must be serialized is the final output rename: it runs synchronously on the engine actor after cancellation is checked, so a cancel command cannot race between successful rename and terminal-state assignment. This short filesystem operation is outside MainActor. Slow/unresponsive network volumes can delay the engine actor; UI navigation remains separate.
 
@@ -75,6 +77,8 @@ Settings are captured on job creation. Apply affects inactive, non-completed job
 
 ## Worker lifecycle and cancellation
 
+Idle snapshots now publish only for new metric samples or changed errors, rather than at every 300 ms tick. Progress/log changes remain coalesced at about 300 ms and state/command changes publish immediately. `MetricCharts` skips work when sample history is unchanged; AppStore does not assign unchanged selection or Dock badge values. SQLite collects UI snapshot-delivery and 100 ms heartbeat delay observations to help detect regressions.
+
 `ProcessController` is the only `@unchecked Sendable` wrapper around a `Process`. All its mutable state is protected by one `NSLock`. The lock covers launch versus cancel, preventing a cancel-before-launch race from leaving an orphan worker. Desired pause state is preserved across sequential encoding/verification processes; a process launched while paused is stopped immediately.
 
 `ProcessRunner.run` bridges GCD to Swift concurrency with a checked continuation and a task cancellation handler. Cancel marks the controller cancelled, resumes a stopped process, sends SIGTERM, then sends SIGKILL after two seconds if the controller still owns a live process. PID signaling is performed while holding the same lock, so an exited process is not retained for delayed escalation. Every retry receives a new controller.
@@ -99,13 +103,15 @@ No conversion command intentionally deletes a source file. No bulk queue action 
 
 `queue.json` is versioned and saved with Foundation atomic write. State-changing commands set a dirty flag; ticks coalesce saves to about one per second. Normal shutdown flushes explicitly. Progress ticks themselves do not force writes. If load fails, future saves are disabled for that engine lifetime so corrupt or newer-version data survives for investigation.
 
-Logs are appended in batches on the persistence actor, separately from job state. Each line is timestamped and tagged with level and job UUID. The app keeps 2,000 live log entries and a bounded pending batch. Disk logs rotate at roughly 5 MiB, retaining one predecessor. Logging failures appear as a persistence banner rather than causing recursive log errors.
+Logs are appended in batches on the persistence actor, separately from job state. Each line is timestamped and tagged with level and job UUID. The app keeps 2,000 live log entries and up to 4,096 pending entries. At 512 pending entries, one asynchronous flush task drains batches to text and SQLite storage instead of waiting for the periodic tick. This reduces losses during short diagnostic bursts while preserving bounded memory. Stream and pending-buffer losses are counted separately and included in `telemetry_health`. Disk logs rotate at roughly 5 MiB, retaining one predecessor. Logging failures appear as a persistence banner rather than causing recursive log errors. Shutdown awaits in-flight flushes and writes the entire remaining pending batch, independently of the smaller live-view ring.
 
 Telemetry samples the app PID and known active worker PIDs. CPU and disk rates use deltas per PID and monotonic elapsed time, avoiding negative rates when a worker exits. Memory is current physical footprint. Completed workers' lifetime counters are not summed into the live process totals. The 300-sample ring is independent of persistent queue history. These are diagnostic OS samples, not billing/accounting values.
 
 The configurable keep-awake assertion exists only while at least one conversion is running. When work is paused, complete, failed, cancelled, or shutting down, the assertion is released. It prevents idle system sleep, not display sleep or an explicit user sleep command.
 
 ## Extension rules
+
+`TelemetryDatabase` separately records sessions, retry attempts, per-job phase timings, logs, OS samples and operation durations. One actor owns the system SQLite connection. Writes bind values and reuse prepared statements within batched WAL transactions; a bounded busy timeout and surfaced loss/error counts keep diagnostic failures independent of conversion. JSON remains authoritative recovery. See [Telemetry](TELEMETRY.md) for schema/retention and [Stress results](STRESS_RESULTS.md) for observations. Old queues without the optional `timings` field continue to decode.
 
 - Add a user-facing setting to `ConversionSettings`, then validation/argv generation, editor binding and a behavior test. Preserve decode compatibility by adding explicit defaults or migrating older persisted settings when changing the schema.
 - Add queue actions to `AppCommand` and handle them on the engine actor. Never let views access `Process` or mutate jobs directly.

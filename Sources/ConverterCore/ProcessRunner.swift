@@ -25,7 +25,7 @@ public enum ConverterError: LocalizedError, Sendable {
     public var errorDescription: String? { switch self { case .message(let value): return value } }
 }
 
-public enum ProcessEvent: Sendable { case started(Int32), stdout(String), stderr(String) }
+public enum ProcessEvent: Sendable { case started(Int32), stdout(String), stderr(String), stderrBatch([String]) }
 public struct ProcessResult: Sendable {
     public let status: Int32
     public let output: Data
@@ -118,6 +118,13 @@ public enum ProcessRunner {
                         DispatchQueue.global(qos: .utility).async {
                             defer { readers.leave() }
                             var pending = Data()
+                            var errorLines: [String] = []
+                            func emitLine(_ line: String) {
+                                if isError {
+                                    errorLines.append(String(line.prefix(8192)))
+                                    if errorLines.count >= 16 { event(.stderrBatch(errorLines)); errorLines.removeAll(keepingCapacity: true) }
+                                } else { event(.stdout(line)) }
+                            }
                             while true {
                                 let data = pipe.fileHandleForReading.availableData
                                 if data.isEmpty { break }
@@ -126,17 +133,19 @@ public enum ProcessRunner {
                                 while let newline = pending.firstIndex(of: 10) {
                                     let line = String(decoding: pending[..<newline], as: UTF8.self)
                                     pending.removeSubrange(...newline)
-                                    event(isError ? .stderr(line) : .stdout(line))
+                                    emitLine(line)
                                 }
                                 if pending.count > 64 * 1024 {
-                                    event(isError ? .stderr(String(decoding: pending, as: UTF8.self)) : .stdout(String(decoding: pending, as: UTF8.self)))
+                                    emitLine(String(decoding: pending, as: UTF8.self))
                                     pending.removeAll(keepingCapacity: true)
                                 }
+                                if !errorLines.isEmpty { event(.stderrBatch(errorLines)); errorLines.removeAll(keepingCapacity: true) }
                             }
                             if !pending.isEmpty {
                                 let line = String(decoding: pending, as: UTF8.self)
-                                event(isError ? .stderr(line) : .stdout(line))
+                                emitLine(line)
                             }
+                            if !errorLines.isEmpty { event(.stderrBatch(errorLines)) }
                             try? pipe.fileHandleForReading.close()
                         }
                     }

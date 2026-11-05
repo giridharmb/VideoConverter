@@ -2,7 +2,7 @@
 
 Validated on the current Apple Silicon Mac with Xcode 27.1, Swift 6.4, macOS SDK 27 and a macOS 14 deployment target. The local FFmpeg bundle is based on installed FFmpeg 8.0.1.
 
-## Passed
+## Initial application validation
 
 - `FFMPEG_TEST_DIRECTORY="$PWD/Resources/Tools" swift test`: **20 tests, zero failures, zero skips**. Conversion tests explicitly selected the bundled tools directory.
 - `xcodebuild -project VideoConverter.xcodeproj -scheme VideoConverter -configuration Debug -derivedDataPath build CODE_SIGNING_ALLOWED=NO test`: **20 tests, zero failures**, including the application build.
@@ -24,4 +24,13 @@ The only Xcode build notices were App Intents metadata extraction being skipped 
 
 Signed/notarized or App Store distribution, Intel or universal-binary operation, clean-machine relocation, exhaustive hardware encoder/codec/container coverage, damaged-file corpus recovery, full frame-by-frame output verification, every FFmpeg workflow, GPU/network/power counters, VoiceOver auditing, or an exhaustive dark-mode/minimum-window-size UI pass. See `TESTING.md` and `DISTRIBUTION.md` for the remaining release checks.
 
-Synthetic sample files and outputs remain under the ignored `build/SampleMedia` folder. The running app has completed sample history and scheduling is stopped.
+## SQLite and stress-test update
+
+- `swift test`: **29 tests, zero failures, zero skips**, using installed FFmpeg. Includes independent pipe batching/draining, SQLite transactions/retention, compatibility and persistence-failure isolation.
+- Xcode Debug scheme: **29 tests, zero failures, zero skips** against the framework and application build.
+- Xcode Release application build: passed for the host architecture. Only App Intents metadata notices were emitted; no Swift compilation warnings.
+- Actual Release engine stress runs and two native GUI sessions completed **1,130 valid conversions** with zero unexpected conversion failures. Twenty-five invalid controls failed independently and 25 truncated controls completed with diagnostics.
+- SQLite integrity and foreign-key checks passed. Measured results, diagnostic losses, exploratory GUI observations and remaining bottlenecks are in [STRESS_RESULTS.md](STRESS_RESULTS.md).
+- Architecture and telemetry flow diagrams were updated; source SVG mockups remain in the repository. A reviewed [SQLite Metrics screenshot](Benchmarks/metrics-sqlite.png) and path-free benchmark summaries are committed with the report.
+
+Synthetic samples and outputs remain under ignored `build/SampleMedia` and `build/Stress/2026-11-05`. GUI test sessions quit normally with completed history and scheduling stopped. The local application database remains under `~/Library/Application Support/VideoConverter/telemetry.sqlite`; it is not committed.

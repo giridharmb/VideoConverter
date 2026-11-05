@@ -18,10 +18,15 @@ Coverage includes:
 - concurrency slots, stop scheduling, process pause/resume, cancellation and retry;
 - preservation of existing files;
 - queue round trip, unsupported version rejection, interrupted-job recovery;
-- actual OS process counter sampling.
+- independent stdout/stderr draining with 5,000 ordered diagnostic lines and a trailing line without newline;
+- actual OS process counter sampling;
 - CPU percentage calibration against `getrusage`, including Mach timebase scaling on Apple Silicon.
 
 Tests create synthetic media with lavfi in unique temporary directories. FFmpeg-dependent tests skip if unavailable, so check the skip count. Tests do not prove compatibility with all FFmpeg versions, codecs, damaged containers, hardware profiles, or filesystem types.
+
+SQLite tests cover bound strings, separate retry attempts, idempotent logs, batch rollback, bounded busy handling, future-schema rejection, owner-only file permissions, session retention, long-running writer preservation and foreign keys. Engine tests also verify conversion continues when SQLite cannot open, phase timings are populated, and old queues without timings still load.
+
+Use the release stress commands in the README for performance work; keep generated fixtures/results out of Git. The headless runner uses the actual engine but does not exercise SwiftUI. GUI comparisons must record a separate application session and distinguish imported jobs from restored history. Results and methodology are in [STRESS_RESULTS.md](STRESS_RESULTS.md).
 
 ## Manual interface pass
 

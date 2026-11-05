@@ -3,6 +3,32 @@ import Darwin
 @testable import ConverterCore
 
 final class EngineTests: XCTestCase, @unchecked Sendable {
+    private final class PipeLines: @unchecked Sendable {
+        private let lock = NSLock()
+        private var output: [String] = [], errors: [String] = []
+        func append(_ event: ProcessEvent) {
+            lock.withLock {
+                switch event {
+                case .stdout(let line): output.append(line)
+                case .stderr(let line): errors.append(line)
+                case .stderrBatch(let lines): errors.append(contentsOf: lines)
+                case .started: break
+                }
+            }
+        }
+        var values: ([String], [String]) { lock.withLock { (output, errors) } }
+    }
+    func testConcurrentPipesPreserveBatchedDiagnosticLinesAndTrailingData() async throws {
+        let lines = PipeLines()
+        let result = try await ProcessRunner.run(executable: URL(fileURLWithPath: "/usr/bin/awk"), arguments: [
+            "BEGIN { for(i=1;i<=5000;i++){print i; print i > \"/dev/stderr\"} printf \"tail\"; printf \"tail\" > \"/dev/stderr\" }"
+        ]) { lines.append($0) }
+        XCTAssertEqual(result.status, 0)
+        let expected = (1...5000).map(String.init) + ["tail"]
+        let (output, errors) = lines.values
+        XCTAssertEqual(output, expected); XCTAssertEqual(errors, expected)
+        XCTAssertTrue(result.diagnostic.hasSuffix("5000\ntail"))
+    }
     private func temporaryDirectory() throws -> URL {
         let directory = FileManager.default.temporaryDirectory.appendingPathComponent("VideoConverterTests-\(UUID().uuidString)")
         try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
@@ -201,5 +227,34 @@ final class EngineTests: XCTestCase, @unchecked Sendable {
         let restored = await engine.currentSnapshot()
         XCTAssertFalse(restored.queueRunning); XCTAssertEqual(restored.jobs.first?.state, .failed); XCTAssertNil(restored.jobs.first?.workerPID)
         await engine.shutdown()
+    }
+    func testDatabaseFailureDoesNotStopConversionAndTimingsAreCaptured() async throws {
+        let tools = try tools(), directory = try temporaryDirectory()
+        defer { try? FileManager.default.removeItem(at: directory) }
+        let input = directory.appendingPathComponent("input.mkv")
+        try await fixture(at: input, tools: tools)
+        let blocked = directory.appendingPathComponent("not-a-database")
+        try FileManager.default.createDirectory(at: blocked, withIntermediateDirectories: true)
+        let engine = ConversionEngine(storageDirectory: directory.appendingPathComponent("state"), telemetryDatabaseURL: blocked)
+        await engine.handle(.initialize)
+        await engine.handle(.add([input], .init())); await engine.handle(.start)
+        let final = try await wait(engine) { $0.jobs.count == 1 && $0.jobs[0].state.isTerminal }
+        XCTAssertEqual(final.jobs[0].state, .completed, final.jobs[0].message)
+        XCTAssertNotNil(final.telemetryError)
+        let timing = try XCTUnwrap(final.jobs[0].timings)
+        XCTAssertGreaterThan(timing.inspectionMs, 0); XCTAssertGreaterThan(timing.encodingMs, 0)
+        XCTAssertGreaterThan(timing.verificationMs, 0); XCTAssertGreaterThan(timing.outputBytes, 0)
+        await engine.shutdown()
+    }
+    func testOldQueueWithoutTimingsStillDecodes() async throws {
+        let directory = try temporaryDirectory(); defer { try? FileManager.default.removeItem(at: directory) }
+        let queue = SavedQueue(jobs: [ConversionJob(input: directory.appendingPathComponent("one.mkv"), settings: .init())], concurrency: 2, toolDirectory: "")
+        var json = try XCTUnwrap(JSONSerialization.jsonObject(with: JSONEncoder().encode(queue)) as? [String: Any])
+        var jobs = try XCTUnwrap(json["jobs"] as? [[String: Any]])
+        jobs[0].removeValue(forKey: "timings"); json["jobs"] = jobs
+        try JSONSerialization.data(withJSONObject: json).write(to: directory.appendingPathComponent("queue.json"))
+        let store = QueuePersistence(directory: directory)
+        let loaded = try await store.load()
+        XCTAssertEqual(loaded?.jobs.count, 1); XCTAssertNil(loaded?.jobs[0].timings)
     }
 }

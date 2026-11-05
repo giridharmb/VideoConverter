@@ -40,7 +40,7 @@ struct ContentView: View {
                 .navigationSplitViewColumnWidth(min: 220, ideal: 235, max: 270)
         } detail: {
             VStack(spacing: 0) {
-                if let message = store.snapshot.persistenceError {
+                if let message = store.snapshot.persistenceError ?? store.snapshot.telemetryError {
                     Label(message, systemImage: "exclamationmark.triangle.fill").font(.caption).foregroundStyle(.orange).padding(8).frame(maxWidth: .infinity, alignment: .leading)
                 }
                 switch store.tab {

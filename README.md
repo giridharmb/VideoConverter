@@ -2,7 +2,7 @@
 
 A native SwiftUI conversion studio with a responsive, actor-owned work queue. Convert video, extract or convert audio, remux streams, inspect media, process folders, and monitor FFmpeg workers without running conversion work on the main thread.
 
-[Visual guide and mockups](Documentation/UI_GUIDE.md) · [Architecture diagrams](Documentation/DIAGRAMS.md) · [Agent instructions](AGENTS.md)
+[Visual guide and mockups](Documentation/UI_GUIDE.md) · [Architecture diagrams](Documentation/DIAGRAMS.md) · [SQLite telemetry](Documentation/TELEMETRY.md) · [Stress-test results](Documentation/STRESS_RESULTS.md) · [Agent instructions](AGENTS.md)
 
 ![Parallel conversion interface](Documentation/Images/queue.png)
 
@@ -41,8 +41,9 @@ Or run `zsh Scripts/build.sh`. Choose a signing team in Xcode for a signed devel
 | Queue | 1–8 conversion slots, independent inspection slots, per-job configuration snapshots, bulk apply/pause/resume/cancel/retry/remove/reorder/duplicate, saved queue and history, CSV report |
 | Progress | Per-job progress, encoding speed, FPS, estimated remaining time, output byte count, Dock badge |
 | Recovery | Damaged packet tolerance, independent job failures, input/output validation, retained partial files, safe restart after interruption |
-| Logs | Separate tab, levels, search, selected-job filter, follow mode, text export, bounded memory, rotating disk logs |
-| Metrics | Separate tab, live app/worker CPU and memory, read/write rates, threads, worker count, thermal state, destination disk space, 300-sample charts and CSV export |
+| Logs | Separate tab, levels, search, selected-job filter, follow mode, text export, bounded memory, rotating text logs and persistent SQLite history |
+| Metrics | Separate tab, real app/worker CPU and memory, I/O rates, threads, thermal state, disk space, live charts, CSV export and SQLite history |
+| Performance | Sessions, retry attempts, phase timings, output byte ratios, UI heartbeat/delivery observations, release stress runner and read-only SQL analysis |
 | Engine | Automatic executable discovery, version and searchable encoders/decoders/formats/filters/hardware acceleration; configurable keep-awake policy |
 | Expert | JSON argument arrays before input and before output, literal argument execution, generated command review/copy |
 
@@ -105,9 +106,12 @@ Application data is stored in:
   queue.json
   application.log
   application.previous.log
+  telemetry.sqlite
+  telemetry.sqlite-wal   # may exist while writers are active
+  telemetry.sqlite-shm
 ```
 
-Logs rotate at approximately 5 MiB with one previous file. The live view retains at most 2,000 entries. Very large individual lines are truncated to 8 KiB, process stderr tails to 64 KiB, and captured stdout to 16 MiB. A burst that exceeds event buffering can drop live events; process stderr still supplies the bounded failure tail. Clearing the log view does not erase disk logs. UserDefaults holds import defaults.
+Logs rotate at approximately 5 MiB with one previous file. The live view retains at most 2,000 entries. Very large individual lines are truncated to 8,192 characters, process stderr tails to 64 KiB, and captured stdout to 16 MiB. Stderr is delivered in small batches; a separate task flushes diagnostic bursts to disk. A burst exceeding the bounded buffers can still lose events: Metrics and SQLite report those losses, and process stderr still supplies the bounded failure tail. Clearing the log view does not erase disk logs or SQLite history. UserDefaults holds import defaults.
 
 Metrics come from macOS process counters (`proc_pid_rusage` and `proc_pidinfo`) and the process thermal state. CPU is sampled as CPU-time delta / monotonic elapsed time; 100% means one logical core, so parallel workloads may exceed 100%. Memory is physical footprint, not a summation of virtual allocations. I/O is kernel-accounted physical I/O and can read zero when data is cached. The UI retains roughly five minutes of samples at about 0.9-second intervals; the first sample establishes a baseline. Exited workers disappear from live totals. Short-lived probes can be missed and unavailable counters are reported. Disk space is for the first running destination or the home volume when idle.
 
@@ -128,6 +132,24 @@ FFMPEG_TEST_DIRECTORY="$PWD/Resources/Tools" swift test
 ```
 
 See [architecture](Documentation/ARCHITECTURE.md), [manual verification](Documentation/TESTING.md), [validation results](Documentation/VALIDATION.md), [distribution](Documentation/DISTRIBUTION.md), and [AI agent instructions](AGENTS.md).
+
+## Reproducible stress testing
+
+The release runner exercises the same `ConversionEngine` as the app, including inspection, scheduling, staging, validation, logs and persistence. It does not render SwiftUI; native UI results are reported separately.
+
+```sh
+python3 Scripts/make-stress-fixtures.py --output build/Stress/my-run/fixtures
+python3 Scripts/run-stress-matrix.py \
+  --fixtures build/Stress/my-run/fixtures --output build/Stress/my-run/results \
+  --tag stress --parallel 1 2 4 8 --threads 0 2 --repeat 3
+python3 Scripts/analyze-telemetry.py --output build/Stress/my-run/analysis --prefix stress
+```
+
+Fixtures are synthetic eight-second 640×360 videos with audio, targeting **1,000,000 bytes ±5%**, in MP4, MKV, MOV, WebM and AVI. The matrix covers H.264/HEVC/VP9 CRFs, stream copy, MP3/AAC bitrates and FLAC/WAV extraction. Invalid and truncated inputs test failure isolation and recovery. Scenarios run sequentially with parallel conversions inside each; use a new output/tag for each run. `--mode log-flood` adds a diagnostic burst workload. Generated files stay under ignored `build/Stress`.
+
+SQLite writes run on a separate actor in short, prepared-statement transactions. Database errors leave conversions running and appear in the UI with a dropped-event count. JSON remains the queue recovery store. History is pruned by age/session/row limits. **Metrics → Reveal database** opens its location. See [SQLite telemetry](Documentation/TELEMETRY.md) for schema, timing definitions, durability, retention and safe backup.
+
+Idle snapshots publish only when data changes. Charts skip unrelated progress/log updates, and unchanged selection/Dock state is not assigned again. The [stress report](Documentation/STRESS_RESULTS.md) separates measured conversion throughput from exploratory GUI observations.
 
 ## Distribution status
 

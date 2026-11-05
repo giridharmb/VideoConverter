@@ -59,6 +59,8 @@ The Logs panel in the editable mockup above uses fictional diagnostic messages. 
 
 ### Metrics
 
+**Reveal database** locates the local SQLite history. The database retains session/attempt timings, resource samples and logs beyond the 300-sample live chart. A telemetry error/drop count is visible without stopping conversions. Charts redraw only for new sample history, and idle snapshots are coalesced. See the [SQLite design](TELEMETRY.md) and [stress report](STRESS_RESULTS.md).
+
 The CPU graph separates app and worker usage; memory reports physical footprint and disk graphs report kernel-accounted I/O rates. Threads, worker count, thermal state and available destination space add context. CSV export contains the retained samples, including separate app/worker CPU and memory fields.
 
 ![Actual calibrated metrics screenshot](Images/metrics.png)

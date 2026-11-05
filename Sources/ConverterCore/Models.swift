@@ -127,6 +127,17 @@ public struct JobProgress: Codable, Sendable, Equatable {
     public init() {}
 }
 
+public struct JobTimings: Codable, Sendable {
+    public var inspectionMs: Double = 0
+    public var planningMs: Double = 0
+    public var preparationMs: Double = 0
+    public var encodingMs: Double = 0
+    public var verificationMs: Double = 0
+    public var commitMs: Double = 0
+    public var outputBytes: Int64 = 0
+    public init() {}
+}
+
 public struct ConversionJob: Codable, Sendable, Identifiable {
     public var id = UUID()
     public var input: URL
@@ -142,6 +153,8 @@ public struct ConversionJob: Codable, Sendable, Identifiable {
     public var finishedAt: Date?
     public var command: [String] = []
     public var workerPID: Int32?
+    // Optional so queues written before telemetry was introduced continue to decode.
+    public var timings: JobTimings? = JobTimings()
     public init(input: URL, settings: ConversionSettings) { self.input = input; self.settings = settings }
 }
 
@@ -168,6 +181,14 @@ public struct EngineSnapshot: Sendable {
     public var preventSleep = true
     public var metrics: [MetricSample] = []
     public var persistenceError: String?
+    public var telemetryError: String?
+    public var telemetryDatabasePath = ""
+    public var sessionID = ""
+    public var telemetryDroppedEvents = 0
+    public var telemetryProcessDrops = 0
+    public var telemetryLogBufferDrops = 0
+    public var publishedAt = Date()
+    public var sequence: UInt64 = 0
     public init() {}
 }
 
@@ -183,4 +204,26 @@ public enum AppCommand: Sendable {
     case setPreventSleep(Bool)
     case moveFirst(Set<UUID>)
     case setTools(String)
+
+    public var operationName: String {
+        switch self {
+        case .initialize: "initialize"
+        case .add: "add"
+        case .start: "start"
+        case .stopScheduling: "stop"
+        case .cancel: "cancel"
+        case .pause: "pause"
+        case .resume: "resume"
+        case .retry: "retry"
+        case .remove: "remove"
+        case .clearFinished: "clearFinished"
+        case .clearLogs: "clearLogs"
+        case .apply: "apply"
+        case .duplicate: "duplicate"
+        case .setConcurrency: "setConcurrency"
+        case .setPreventSleep: "setPreventSleep"
+        case .moveFirst: "moveFirst"
+        case .setTools: "setTools"
+        }
+    }
 }

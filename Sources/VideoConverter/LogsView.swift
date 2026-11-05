@@ -52,7 +52,7 @@ struct LogsView: View {
                 Spacer()
                 Button("Open log folder") { NSWorkspace.shared.open(FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)[0].appendingPathComponent("VideoConverter")) }
             }
-            Text("Disk logs rotate at 5 MB with one previous file. Clearing the view leaves disk logs intact. Diagnostics can include filenames and media metadata.")
+            Text("Logs are also recorded in local SQLite. Text logs rotate at 5 MB with one previous file. Clearing the view leaves stored history intact. Diagnostics can include filenames and media metadata.")
                 .font(.caption).foregroundStyle(.secondary)
         }.padding(28)
     }

@@ -15,11 +15,13 @@
 		584FB4581CBAD1F6EF6FB2E3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 612489BD6F8A5DC489C861E2 /* Assets.xcassets */; };
 		632A8DA0E6DCFB7A82DFBD63 /* CommandBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DE5342F22798048480B27AE /* CommandBuilder.swift */; };
 		660AEACB9FDFA184215FA54E /* QueueView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D1E31BD5A40B06A3C70EE15 /* QueueView.swift */; };
+		6741039A7B6C8AF1E26CD4ED /* TelemetryDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D115BCABDDC5CC16D9460C0E /* TelemetryDatabase.swift */; };
 		75922AD2E4CC6AB5F25C351F /* ProcessRunner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88539B93B9BEF148430777EC /* ProcessRunner.swift */; };
 		7CC4D50BA7239A3F19D32451 /* Tools in Resources */ = {isa = PBXBuildFile; fileRef = 9871754BD3261303185719DE /* Tools */; };
 		7F222E5436BA0B9F2BF76030 /* ConverterCore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 41B1B9D09981E35247258D9B /* ConverterCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		8330ECF0B76BACAC7BE0C574 /* EngineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8332169908D1ECDBFAACD8EC /* EngineView.swift */; };
 		877ABBEAC6E603A8140CB70E /* AppStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7C39A407665A54297074E1B /* AppStore.swift */; };
+		88C36D58243AE77DC6D1BB1D /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D462369CFC5ACC263A56F48 /* libsqlite3.tbd */; };
 		A4CA04C1F54F162A239C3B96 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CD1314B7A050DA9118AF410 /* ContentView.swift */; };
 		B6A0C73E6413AD7AAB9A62B6 /* InspectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3730713A6F9ED3E50EA15FF /* InspectorView.swift */; };
 		BD5261B61CC3EDE2CA01D539 /* ConversionEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = F17C0990F914DF75F305898A /* ConversionEngine.swift */; };
@@ -28,6 +30,7 @@
 		D0E59CA6CEFB8108C7EED04C /* QueuePersistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC30CF38118B24021B054FA /* QueuePersistence.swift */; };
 		DD30EAE939F38A7FBE0FB7BC /* ConverterCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41B1B9D09981E35247258D9B /* ConverterCore.framework */; };
 		E441C6C8CAA219BA4C04DB45 /* VideoConverterApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8B9B4C590D30791DC9832C3 /* VideoConverterApp.swift */; };
+		F3B8BB2CDE8C7350AEFE4EAC /* TelemetryDatabaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A2EDCF84B08E1DDF32FBC9 /* TelemetryDatabaseTests.swift */; };
 		FAEA9D0788C056E687584F57 /* MediaProbe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D84DF454AB1AEC0E4DBCA0 /* MediaProbe.swift */; };
 		FDFC29E7C8397A285A5A0332 /* LogsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4787EBA1827D58F211CC337 /* LogsView.swift */; };
 /* End PBXBuildFile section */
@@ -76,6 +79,7 @@
 
 /* Begin PBXFileReference section */
 		2D1E31BD5A40B06A3C70EE15 /* QueueView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueueView.swift; sourceTree = "<group>"; };
+		3D462369CFC5ACC263A56F48 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		3FC30CF38118B24021B054FA /* QueuePersistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueuePersistence.swift; sourceTree = "<group>"; };
 		41B1B9D09981E35247258D9B /* ConverterCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ConverterCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		47D84DF454AB1AEC0E4DBCA0 /* MediaProbe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaProbe.swift; sourceTree = "<group>"; };
@@ -93,6 +97,8 @@
 		B4437F885D72126AD49560E7 /* Telemetry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Telemetry.swift; sourceTree = "<group>"; };
 		C2A7DBB365705ECDB2BFB4CF /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
 		C7C39A407665A54297074E1B /* AppStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStore.swift; sourceTree = "<group>"; };
+		D115BCABDDC5CC16D9460C0E /* TelemetryDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TelemetryDatabase.swift; sourceTree = "<group>"; };
+		D5A2EDCF84B08E1DDF32FBC9 /* TelemetryDatabaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TelemetryDatabaseTests.swift; sourceTree = "<group>"; };
 		DB184B94329CE5BB2798B774 /* EngineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EngineTests.swift; sourceTree = "<group>"; };
 		F17C0990F914DF75F305898A /* ConversionEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversionEngine.swift; sourceTree = "<group>"; };
 		F4B6CF31FBDCFB1A06C00FD8 /* ConverterCoreTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ConverterCoreTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -100,6 +106,14 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		6ECF903754C034E52F9053F0 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				88C36D58243AE77DC6D1BB1D /* libsqlite3.tbd in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		C93ED37BC97FC93968D1CD98 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -119,6 +133,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		62211F2891B247BDCC696252 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				3D462369CFC5ACC263A56F48 /* libsqlite3.tbd */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		7494859F11E2EB08D879D650 /* VideoConverter */ = {
 			isa = PBXGroup;
 			children = (
@@ -140,6 +162,7 @@
 			children = (
 				B26F28C454321EAC9577F019 /* CommandBuilderTests.swift */,
 				DB184B94329CE5BB2798B774 /* EngineTests.swift */,
+				D5A2EDCF84B08E1DDF32FBC9 /* TelemetryDatabaseTests.swift */,
 			);
 			name = ConverterCoreTests;
 			path = Tests/ConverterCoreTests;
@@ -155,6 +178,7 @@
 				88539B93B9BEF148430777EC /* ProcessRunner.swift */,
 				3FC30CF38118B24021B054FA /* QueuePersistence.swift */,
 				B4437F885D72126AD49560E7 /* Telemetry.swift */,
+				D115BCABDDC5CC16D9460C0E /* TelemetryDatabase.swift */,
 			);
 			name = ConverterCore;
 			path = Sources/ConverterCore;
@@ -186,6 +210,7 @@
 				A7C64F3122763DEF8DBD979F /* ConverterCoreTests */,
 				C2D95B0F5D33193FDA42315E /* Resources */,
 				7494859F11E2EB08D879D650 /* VideoConverter */,
+				62211F2891B247BDCC696252 /* Frameworks */,
 				C1095522CCCC3015CD5BDDB9 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -198,6 +223,7 @@
 			buildConfigurationList = 26E7D96323168B4C195E51C9 /* Build configuration list for PBXNativeTarget "ConverterCore" */;
 			buildPhases = (
 				8EB7B6F17B4401A205528461 /* Sources */,
+				6ECF903754C034E52F9053F0 /* Frameworks */,
 			);
 			buildRules = (
 			);
@@ -334,6 +360,7 @@
 				75922AD2E4CC6AB5F25C351F /* ProcessRunner.swift in Sources */,
 				D0E59CA6CEFB8108C7EED04C /* QueuePersistence.swift in Sources */,
 				C10BD8BE90502515616CAA2F /* Telemetry.swift in Sources */,
+				6741039A7B6C8AF1E26CD4ED /* TelemetryDatabase.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -343,6 +370,7 @@
 			files = (
 				C519B37D383E2C923046CB93 /* CommandBuilderTests.swift in Sources */,
 				46798618A54605652DDA0E96 /* EngineTests.swift in Sources */,
+				F3B8BB2CDE8C7350AEFE4EAC /* TelemetryDatabaseTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
