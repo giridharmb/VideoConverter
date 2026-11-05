@@ -34,3 +34,13 @@ Signed/notarized or App Store distribution, Intel or universal-binary operation,
 - Architecture and telemetry flow diagrams were updated; source SVG mockups remain in the repository. A reviewed [SQLite Metrics screenshot](Benchmarks/metrics-sqlite.png) and path-free benchmark summaries are committed with the report.
 
 Synthetic samples and outputs remain under ignored `build/SampleMedia` and `build/Stress/2026-11-05`. GUI test sessions quit normally with completed history and scheduling stopped. The local application database remains under `~/Library/Application Support/VideoConverter/telemetry.sqlite`; it is not committed.
+
+## Parallel chunk update
+
+- SwiftPM and Xcode Debug tests: **38 tests, zero failures, zero skips**. New integration tests compare all losslessly decoded frames across rational-rate/trim boundaries, compare continuous-audio hashes, verify metadata/chapter offsets and exercise shared budgeting, all-worker pause/cancel/reap/retry and pause-aware probe timeouts.
+- Release application build passed. The native interface imported two synthetic 30-second 720p files and converted each through six HEVC chunks with four reserved workers. Both completed with all six segments verified. The revised explicit details control showed independent live chunk progress and preserved completed bars after relaunch. [Screenshot](Images/chunks.png).
+- Twelve Release single-file comparison scenarios completed with zero reported telemetry loss; the SQLite analysis passed integrity/foreign-key checks. [Measurements and limitations](CHUNKED_CONVERSION.md) include the automatic-thread case where standard mode was faster.
+- The chunk workflow Mermaid diagram, six updated system diagrams and SQLite flow diagram rendered successfully. Source mockup terminology now reflects the shared worker budget.
+- No actual 3 GB source, long 4K/HDR soak, exhaustive VFR/timestamp corpus, or complete dark/minimum-size accessibility audit was performed. The feature stays opt-in with explicit eligibility checks and limitations.
+
+Chunk benchmark media and raw results remain under ignored `build/ChunkBench/2026-11-05`. Published summaries contain synthetic basenames/measurements only, without local paths or raw logs/databases.

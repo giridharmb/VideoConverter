@@ -41,6 +41,14 @@ flowchart LR
 
 Selecting one job loads a settings copy into the inspector. Press Apply to change eligible selected jobs. Editing the form does not mutate running or completed jobs. Save defaults affects future imports. Duplicate with current settings creates independent jobs, which is useful for producing several formats from the same input.
 
+### One file, multiple video workers
+
+The **Video** panel includes an optional **Convert this file in parallel chunks** control, requested worker count and chunk length. The queue's **Worker slots** budget is shared across files/chunks. A job keeps its aggregate progress bar and a **Show/Hide chunk progress** button with individual segment bars in a bounded scroll area. Joining/audio and final verification are separate visible stages. The screenshot below is a completed native run with six verified chunks; the live check also observed independent chunk bars updating during encoding.
+
+![Parallel chunk controls and individual progress](Images/chunks.png)
+
+See [parallel chunk design and measured tradeoffs](CHUNKED_CONVERSION.md) for supported formats, frame alignment, audio continuity and temporary-space requirements. Standard mode remains the default.
+
 ### Running application
 
 ![Actual parallel conversion screenshot](Images/queue.png)

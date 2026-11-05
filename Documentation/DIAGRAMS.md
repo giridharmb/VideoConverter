@@ -16,13 +16,15 @@ flowchart TB
     subgraph Core["Swift concurrency · independent of the main actor"]
         Engine["ConversionEngine actor\nSingle owner of jobs, slots and reservations"]
         Probe["Inspection tasks\nMaximum 2"]
-        Convert["Conversion tasks\n1–8 slots, paused jobs retain a slot"]
+        Convert["Conversion tasks\n1–8 shared file/chunk worker slots"]
+        Chunks["Optional bounded chunk group\nVideo-only segments; continuous final audio"]
         Save["QueuePersistence actor\nAtomic JSON + rotating logs"]
         SQL["TelemetryDatabase actor\nBatched SQLite WAL transactions"]
         Telemetry["TelemetrySampler\nCPU, memory, I/O, threads, thermal, disk"]
         Snapshots["EngineSnapshot stream\nNewest snapshot only"]
         Engine --> Probe
         Engine --> Convert
+        Convert --> Chunks
         Engine --> Save
         Engine --> SQL
         Engine --> Telemetry
@@ -37,6 +39,7 @@ flowchart TB
     Commands --> Engine
     Probe --> Runner
     Convert --> Runner
+    Chunks --> Runner
     FFmpeg -->|"Progress and diagnostics"| Runner
     Runner -->|"Bounded events"| Engine
     Snapshots -->|"Coalesced updates"| Store
@@ -44,7 +47,7 @@ flowchart TB
     Telemetry -.->|"Sample live app and worker PIDs"| FFmpeg
 ```
 
-The SwiftUI process does not directly link the FFmpeg C API. The executable frontends load those libraries inside child processes. A native codec crash becomes a job error rather than a decoder crash inside the view process.
+The SwiftUI process does not directly link the FFmpeg C API. The executable frontends load those libraries inside child processes. A native codec crash becomes a job error rather than a decoder crash inside the view process. The [parallel chunk workflow](CHUNKED_CONVERSION.md) has its own execution diagram and timing constraints.
 
 ## One click through a completed conversion
 
@@ -121,7 +124,7 @@ stateDiagram-v2
     Cancelled --> Waiting: Retry without media after worker exits
     Completed --> [*]: Remove history entry
     note right of Paused
-        Retains the conversion slot.
+        Retains all reserved worker slots.
         Stop queue only stops new launches.
     end note
     note left of Failed

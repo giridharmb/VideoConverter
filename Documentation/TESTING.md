@@ -26,6 +26,8 @@ Tests create synthetic media with lavfi in unique temporary directories. FFmpeg-
 
 SQLite tests cover bound strings, separate retry attempts, idempotent logs, batch rollback, bounded busy handling, future-schema rejection, owner-only file permissions, session retention, long-running writer preservation and foreign keys. Engine tests also verify conversion continues when SQLite cannot open, phase timings are populated, and old queues without timings still load.
 
+Chunk tests compare every decoded lossless video frame across rational-rate boundaries and frame-aligned trims, and compare decoded audio hashes against one continuous reference encode. They also cover H.264/HEVC, MP4/MOV/MKV, mute, metadata/chapter trim offsets, shared worker budgeting, all-worker pause/cancel/reap/retry, pause-aware probe timeouts, unsupported settings and older settings/media decoding. See [chunk design and measured comparisons](CHUNKED_CONVERSION.md).
+
 Use the release stress commands in the README for performance work; keep generated fixtures/results out of Git. The headless runner uses the actual engine but does not exercise SwiftUI. GUI comparisons must record a separate application session and distinguish imported jobs from restored history. Results and methodology are in [STRESS_RESULTS.md](STRESS_RESULTS.md).
 
 ## Manual interface pass
@@ -42,6 +44,7 @@ Use the release stress commands in the README for performance work; keep generat
 10. Quit with active work, choose Keep Converting, and verify it continues. Quit again and choose Stop and Quit. Relaunch: queue/history recover, no work starts automatically. A force quit is a separate destructive test; use only disposable media/state.
 11. Resize to the minimum window dimensions and use light/dark system appearances. Check settings scrolling, long errors, large font/VoiceOver labels, keyboard menus and multi-selection.
 12. For a bundled release, relocate the app and test on a Mac without Homebrew. Check that Engine reports the app's `Contents/Resources/Tools` path.
+13. Enable parallel chunks in Video for a regular-timing H.264/HEVC input. Adjust workers/length and queue slots, apply, expand chunk progress, pause/resume/cancel and retry. Confirm one final output, continuous audio, continued unrelated jobs and retained failed staging. Compare performance with standard mode; do not assume more workers will help.
 
 ## Known limits to verify before release
 

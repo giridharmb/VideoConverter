@@ -6,6 +6,8 @@ This is a native macOS 14+ SwiftUI application written in Swift 6. The objective
 
 `Documentation/DIAGRAMS.md` explains concurrency, the job state machine, cancellation and output commit using GitHub-rendered Mermaid. `Documentation/UI_GUIDE.md` maps the user workflow to editable SVG mockups and real screenshots. Update the relevant diagrams when changing those contracts; diagrams describe implemented behavior, not a speculative roadmap. SVG examples use illustrative values, not measured performance.
 
+Read `Documentation/CHUNKED_CONVERSION.md` before changing parallel video execution. The app target is in `VideoConverter.xcodeproj` with scheme `VideoConverter`; opening `Package.swift` selects a package without the graphical app.
+
 ## Build and test
 
 Read `Documentation/TELEMETRY.md` for the SQLite schema, timing definitions, retention and backup rules, and `Documentation/STRESS_RESULTS.md` for measured results and limitations. Headless engine timings are not GUI frame-time measurements.
@@ -38,11 +40,16 @@ FFmpeg integration tests use the installed tools and generate their own temporar
 14. Surface process-stream, buffer and database losses. Record retries as separate attempts; preserve monotonic phase timings on failures/cancellation. Never remove output verification to improve benchmark numbers. Invalid/nonfinite settings must remain loggable without dropping unrelated diagnostics.
 15. Publish idle snapshots only for changed data. Chart equality assumes append-only metric history with a new timestamp for each sample. Update that contract if samples become mutable. Avoid assigning unchanged selection/Dock values on every snapshot.
 16. Keep the worker stream (256 events), stderr batches (16 lines), pending logs (4,096) and one burst flusher (threshold 512) bounded. Count lost stderr lines, not just batch envelopes. Shutdown must await ticker/flusher work and persist pending logs, not substitute the smaller live-view ring. Retention must preserve the current writer's session beyond 30 days.
+17. The conversion limit is a shared worker-slot budget. Sum `ConversionPlan.workerSlots`, not parent job count. A chunked file captures its available allocation at launch and keeps that reservation through pause/join/verification. Input inspections keep their separate two-slot budget. Never multiply a full per-file pool by the number of queue slots.
+18. Each chunk-pool lane owns a fresh `ProcessController`, reused sequentially by that lane only. Signal all controllers on pause/resume/cancel/quit; preserve pause/cancel-before-launch behavior. Probe timeouts exclude explicit pause time. Parent task ownership lasts until all children are reaped.
+19. Chunks are video-only closed-GOP MP4s with a common time base/rate and exact expected frame counts. Join only after every chunk verifies, using controlled relative manifest names with concat safe mode. Encode original audio once during final joining. Never independently encode lossy audio chunks, silently skip failed chunks, or bypass final verification/commit safety.
+20. Keep chunk mode opt-in and reject unsupported settings before launch. Source-offset/rate metadata checks are heuristics, not proof of CFR timing; do not promise arbitrary VFR frame accuracy. Optional settings/media/progress fields preserve older queue/default decoding. Retry restarts the whole job and removes only its own staging directory, including chunks; it does not resume completed pieces.
 
 ## Where changes belong
 
 - Models/settings: `Sources/ConverterCore/Models.swift`.
 - Validation and FFmpeg mapping: `CommandBuilder.swift`; cover meaningful parser/validation changes in tests.
+- Chunk eligibility, frame ranges, argv and safe concat manifest: `ChunkPlanner.swift`; preserve rational rates, independent video segments and one continuous audio encode. Chunk execution/progress stays inside `ConversionEngine`.
 - Queue policies/state transitions: `ConversionEngine.swift`; extend integration coverage for lifecycle changes.
 - Signals/processes/pipes: `ProcessRunner.swift`; test cancellation before/during launch and while paused.
 - Probing: `MediaProbe.swift`; preserve timeout behavior and optional JSON field handling.

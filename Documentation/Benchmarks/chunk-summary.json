@@ -1,0 +1,1448 @@
+{
+  "sqlite_version": "3.40.1",
+  "integrity": "ok",
+  "sessions": [
+    {
+      "label": "chunk-compare-c4-t0-r1-chunks1",
+      "finished": true,
+      "logical_cpus": 14,
+      "parallel": 4,
+      "encoder_threads": 0,
+      "mode": "single-video",
+      "chunk_workers": 1,
+      "chunk_seconds": 5,
+      "valid_jobs": 1,
+      "valid_completed": 1,
+      "unexpected_failures": 0,
+      "restored_jobs": 0,
+      "negative_states": [],
+      "wall_seconds": 1.4499089166056365,
+      "valid_jobs_per_second": 0.6896984966070058,
+      "telemetry_samples": 2,
+      "log_rows": 4,
+      "peak_worker_cpu": 0.0,
+      "mean_app_cpu": 0.23106530900028696,
+      "peak_total_memory_mib": 466.18910217285156,
+      "peak_threads": 84,
+      "peak_read_mib_s": 0.033060337234631566,
+      "peak_write_mib_s": 0.0,
+      "thermal_states": [
+        "Nominal"
+      ],
+      "telemetry_dropped_total": 0,
+      "operations_ms": {
+        "actor_ping": {
+          "n": 17,
+          "mean": 0.02021568498628981,
+          "p50": 0.0020416919142007828,
+          "p95": 0.06862506270408611,
+          "max": 0.2949582412838936
+        },
+        "batch_wall": {
+          "n": 1,
+          "mean": 1449.9089166056365,
+          "p50": 1449.9089166056365,
+          "p95": 1449.9089166056365,
+          "max": 1449.9089166056365
+        },
+        "command": {
+          "n": 6,
+          "mean": 46.48595136435082,
+          "p50": 0.009270850569009781,
+          "p95": 209.0608750586398,
+          "max": 278.6757501307875
+        },
+        "database_flush": {
+          "n": 3,
+          "mean": 1.2357360683381557,
+          "p50": 1.451416639611125,
+          "p95": 1.7636041855439544,
+          "max": 1.798291690647602
+        },
+        "engine_tick": {
+          "n": 8,
+          "mean": 1.2927603675052524,
+          "p50": 0.001187552697956562,
+          "p95": 4.410295793786645,
+          "max": 4.674166673794389
+        },
+        "scenario_config": {
+          "n": 1,
+          "mean": 0.0,
+          "p50": 0.0,
+          "p95": 0.0,
+          "max": 0.0
+        },
+        "telemetry_health": {
+          "n": 4,
+          "mean": 0.0,
+          "p50": 0.0,
+          "p95": 0.0,
+          "max": 0.0
+        }
+      },
+      "phase_totals_ms": {
+        "inspection_ms": 43.611583299934864,
+        "planning_ms": 0.19062496721744537,
+        "preparation_ms": 0.18170848488807678,
+        "encoding_ms": 1404.4624583330005,
+        "verification_ms": 38.30649983137846,
+        "commit_ms": 0.19183335825800896
+      }
+    },
+    {
+      "label": "chunk-compare-c4-t0-r1-chunks2",
+      "finished": true,
+      "logical_cpus": 14,
+      "parallel": 4,
+      "encoder_threads": 0,
+      "mode": "single-video",
+      "chunk_workers": 2,
+      "chunk_seconds": 5,
+      "valid_jobs": 1,
+      "valid_completed": 1,
+      "unexpected_failures": 0,
+      "restored_jobs": 0,
+      "negative_states": [],
+      "wall_seconds": 2.48490162496455,
+      "valid_jobs_per_second": 0.4024304181515701,
+      "telemetry_samples": 3,
+      "log_rows": 11,
+      "peak_worker_cpu": 0.0,
+      "mean_app_cpu": 0.6588886708384004,
+      "peak_total_memory_mib": 493.330322265625,
+      "peak_threads": 52,
+      "peak_read_mib_s": 0.016928069919533547,
+      "peak_write_mib_s": 0.016928069919533547,
+      "thermal_states": [
+        "Nominal"
+      ],
+      "telemetry_dropped_total": 0,
+      "operations_ms": {
+        "actor_ping": {
+          "n": 27,
+          "mean": 0.015134276408288214,
+          "p50": 0.0025832559913396835,
+          "p95": 0.06546671502292152,
+          "max": 0.21670828573405743
+        },
+        "batch_wall": {
+          "n": 1,
+          "mean": 2484.90162496455,
+          "p50": 2484.90162496455,
+          "p95": 2484.90162496455,
+          "max": 2484.90162496455
+        },
+        "chunk_join": {
+          "n": 1,
+          "mean": 578.159166732803,
+          "p50": 578.159166732803,
+          "p95": 578.159166732803,
+          "max": 578.159166732803
+        },
+        "chunk_total": {
+          "n": 6,
+          "mean": 579.2347291329255,
+          "p50": 559.4717083731666,
+          "p95": 656.4566458109766,
+          "max": 673.3091250061989
+        },
+        "chunk_verify": {
+          "n": 6,
+          "mean": 39.42599298898131,
+          "p50": 39.173999917693436,
+          "p95": 43.449218734167516,
+          "max": 44.69133331440389
+        },
+        "command": {
+          "n": 6,
+          "mean": 37.63195833501717,
+          "p50": 0.007083406671881676,
+          "p95": 168.92779164481908,
+          "max": 224.9686666764319
+        },
+        "database_flush": {
+          "n": 6,
+          "mean": 0.5950902899106344,
+          "p50": 0.42758334893733263,
+          "p95": 1.3531874283216894,
+          "max": 1.5284165274351835
+        },
+        "engine_tick": {
+          "n": 11,
+          "mean": 1.3525303114544263,
+          "p50": 0.26825000531971455,
+          "p95": 5.074208369478583,
+          "max": 6.752208340913057
+        },
+        "scenario_config": {
+          "n": 1,
+          "mean": 0.0,
+          "p50": 0.0,
+          "p95": 0.0,
+          "max": 0.0
+        },
+        "telemetry_health": {
+          "n": 7,
+          "mean": 0.0,
+          "p50": 0.0,
+          "p95": 0.0,
+          "max": 0.0
+        }
+      },
+      "phase_totals_ms": {
+        "inspection_ms": 34.780000103637576,
+        "planning_ms": 0.7297915872186422,
+        "preparation_ms": 0.2137916162610054,
+        "encoding_ms": 2353.888208279386,
+        "verification_ms": 36.41233337111771,
+        "commit_ms": 0.1552083995193243
+      }
+    },
+    {
+      "label": "chunk-compare-c4-t0-r1-chunks4",
+      "finished": true,
+      "logical_cpus": 14,
+      "parallel": 4,
+      "encoder_threads": 0,
+      "mode": "single-video",
+      "chunk_workers": 4,
+      "chunk_seconds": 5,
+      "valid_jobs": 1,
+      "valid_completed": 1,
+      "unexpected_failures": 0,
+      "restored_jobs": 0,
+      "negative_states": [],
+      "wall_seconds": 2.4115780831780285,
+      "valid_jobs_per_second": 0.41466623327500923,
+      "telemetry_samples": 3,
+      "log_rows": 11,
+      "peak_worker_cpu": 0.0,
+      "mean_app_cpu": 0.7378084005346988,
+      "peak_total_memory_mib": 936.488037109375,
+      "peak_threads": 53,
+      "peak_read_mib_s": 0.037813024617329924,
+      "peak_write_mib_s": 0.012604341539109975,
+      "thermal_states": [
+        "Nominal"
+      ],
+      "telemetry_dropped_total": 0,
+      "operations_ms": {
+        "actor_ping": {
+          "n": 26,
+          "mean": 0.002459918435376424,
+          "p50": 0.0015624100342392921,
+          "p95": 0.006760354153811932,
+          "max": 0.011625001206994057
+        },
+        "batch_wall": {
+          "n": 1,
+          "mean": 2411.5780831780285,
+          "p50": 2411.5780831780285,
+          "p95": 2411.5780831780285,
+          "max": 2411.5780831780285
+        },
+        "chunk_join": {
+          "n": 1,
+          "mean": 591.7161251418293,
+          "p50": 591.7161251418293,
+          "p95": 591.7161251418293,
+          "max": 591.7161251418293
+        },
+        "chunk_total": {
+          "n": 6,
+          "mean": 932.1859235642478,
+          "p50": 983.9652916416526,
+          "p95": 1055.4659583722241,
+          "max": 1067.6557917613536
+        },
+        "chunk_verify": {
+          "n": 6,
+          "mean": 41.702374971161284,
+          "p50": 39.91668741218746,
+          "p95": 51.49616667767987,
+          "max": 54.88416668958962
+        },
+        "command": {
+          "n": 6,
+          "mean": 37.671097282630704,
+          "p50": 0.006062560714781284,
+          "p95": 169.12666673306376,
+          "max": 225.24858335964382
+        },
+        "database_flush": {
+          "n": 6,
+          "mean": 1.5237847110256553,
+          "p50": 0.5962499417364597,
+          "p95": 5.091385450214148,
+          "max": 6.378416670486331
+        },
+        "engine_tick": {
+          "n": 11,
+          "mean": 1.5625984577292746,
+          "p50": 0.6089583039283752,
+          "p95": 6.3490624306723475,
+          "max": 8.904833346605301
+        },
+        "scenario_config": {
+          "n": 1,
+          "mean": 0.0,
+          "p50": 0.0,
+          "p95": 0.0,
+          "max": 0.0
+        },
+        "telemetry_health": {
+          "n": 7,
+          "mean": 0.0,
+          "p50": 0.0,
+          "p95": 0.0,
+          "max": 0.0
+        }
+      },
+      "phase_totals_ms": {
+        "inspection_ms": 36.47895832546055,
+        "planning_ms": 0.7204166613519192,
+        "preparation_ms": 0.17758319154381752,
+        "encoding_ms": 2361.340624978766,
+        "verification_ms": 35.49012495204806,
+        "commit_ms": 0.14862488023936749
+      }
+    },
+    {
+      "label": "chunk-compare-c4-t2-r1-chunks1",
+      "finished": true,
+      "logical_cpus": 14,
+      "parallel": 4,
+      "encoder_threads": 2,
+      "mode": "single-video",
+      "chunk_workers": 1,
+      "chunk_seconds": 5,
+      "valid_jobs": 1,
+      "valid_completed": 1,
+      "unexpected_failures": 0,
+      "restored_jobs": 0,
+      "negative_states": [],
+      "wall_seconds": 5.223381708143279,
+      "valid_jobs_per_second": 0.19144685490646698,
+      "telemetry_samples": 6,
+      "log_rows": 4,
+      "peak_worker_cpu": 238.2222017791801,
+      "mean_app_cpu": 0.26478484098020455,
+      "peak_total_memory_mib": 281.48570251464844,
+      "peak_threads": 37,
+      "peak_read_mib_s": 0.01665182655956384,
+      "peak_write_mib_s": 8.56804151732087,
+      "thermal_states": [
+        "Nominal"
+      ],
+      "telemetry_dropped_total": 0,
+      "operations_ms": {
+        "actor_ping": {
+          "n": 53,
+          "mean": 0.0021053249684144866,
+          "p50": 0.0016249250620603561,
+          "p95": 0.004191603511571879,
+          "max": 0.012708129361271858
+        },
+        "batch_wall": {
+          "n": 1,
+          "mean": 5223.381708143279,
+          "p50": 5223.381708143279,
+          "p95": 5223.381708143279,
+          "max": 5223.381708143279
+        },
+        "command": {
+          "n": 6,
+          "mean": 44.65681946991632,
+          "p50": 0.007895869202911854,
+          "p95": 200.8183958241716,
+          "max": 267.67762494273484
+        },
+        "database_flush": {
+          "n": 8,
+          "mean": 0.46463016769848764,
+          "p50": 0.20756234880536795,
+          "p95": 0.9523562388494611,
+          "max": 0.9886249899864197
+        },
+        "engine_tick": {
+          "n": 20,
+          "mean": 0.4782562842592597,
+          "p50": 0.001625041477382183,
+          "p95": 2.311475086025894,
+          "max": 3.0971250962466
+        },
+        "scenario_config": {
+          "n": 1,
+          "mean": 0.0,
+          "p50": 0.0,
+          "p95": 0.0,
+          "max": 0.0
+        },
+        "telemetry_health": {
+          "n": 9,
+          "mean": 0.0,
+          "p50": 0.0,
+          "p95": 0.0,
+          "max": 0.0
+        }
+      },
+      "phase_totals_ms": {
+        "inspection_ms": 36.7147084325552,
+        "planning_ms": 0.2073331270366907,
+        "preparation_ms": 0.16995822079479694,
+        "encoding_ms": 5085.246166680008,
+        "verification_ms": 36.65525000542402,
+        "commit_ms": 0.14762510545551777
+      }
+    },
+    {
+      "label": "chunk-compare-c4-t2-r1-chunks2",
+      "finished": true,
+      "logical_cpus": 14,
+      "parallel": 4,
+      "encoder_threads": 2,
+      "mode": "single-video",
+      "chunk_workers": 2,
+      "chunk_seconds": 5,
+      "valid_jobs": 1,
+      "valid_completed": 1,
+      "unexpected_failures": 0,
+      "restored_jobs": 0,
+      "negative_states": [],
+      "wall_seconds": 3.860416666837409,
+      "valid_jobs_per_second": 0.2590393955632866,
+      "telemetry_samples": 5,
+      "log_rows": 11,
+      "peak_worker_cpu": 0.0,
+      "mean_app_cpu": 0.601246982541892,
+      "peak_total_memory_mib": 443.75201416015625,
+      "peak_threads": 33,
+      "peak_read_mib_s": 0.0,
+      "peak_write_mib_s": 0.01670718120885854,
+      "thermal_states": [
+        "Nominal"
+      ],
+      "telemetry_dropped_total": 0,
+      "operations_ms": {
+        "actor_ping": {
+          "n": 40,
+          "mean": 0.006152078276500106,
+          "p50": 0.0016666017472743988,
+          "p95": 0.010229193139821267,
+          "max": 0.14754151925444603
+        },
+        "batch_wall": {
+          "n": 1,
+          "mean": 3860.416666837409,
+          "p50": 3860.416666837409,
+          "p95": 3860.416666837409,
+          "max": 3860.416666837409
+        },
+        "chunk_join": {
+          "n": 1,
+          "mean": 592.2388748731464,
+          "p50": 592.2388748731464,
+          "p95": 592.2388748731464,
+          "max": 592.2388748731464
+        },
+        "chunk_total": {
+          "n": 6,
+          "mean": 1053.2373749883845,
+          "p50": 1058.0470208078623,
+          "p95": 1090.801958402153,
+          "max": 1091.4525417611003
+        },
+        "chunk_verify": {
+          "n": 6,
+          "mean": 39.2084374713401,
+          "p50": 38.14993740525097,
+          "p95": 42.160760378465056,
+          "max": 42.57733328267932
+        },
+        "command": {
+          "n": 6,
+          "mean": 37.53458335995674,
+          "p50": 0.006145797669887543,
+          "p95": 168.53923973394558,
+          "max": 224.48333352804184
+        },
+        "database_flush": {
+          "n": 11,
+          "mean": 0.2514999783174558,
+          "p50": 0.19741663709282875,
+          "p95": 0.5080417031422257,
+          "max": 0.7162918336689472
+        },
+        "engine_tick": {
+          "n": 15,
+          "mean": 0.8020944582919279,
+          "p50": 0.7307499181479216,
+          "p95": 1.9221749389544112,
+          "max": 3.0682499054819345
+        },
+        "scenario_config": {
+          "n": 1,
+          "mean": 0.0,
+          "p50": 0.0,
+          "p95": 0.0,
+          "max": 0.0
+        },
+        "telemetry_health": {
+          "n": 12,
+          "mean": 0.0,
+          "p50": 0.0,
+          "p95": 0.0,
+          "max": 0.0
+        }
+      },
+      "phase_totals_ms": {
+        "inspection_ms": 36.21429158374667,
+        "planning_ms": 0.672333175316453,
+        "preparation_ms": 0.17279153689742088,
+        "encoding_ms": 3783.474874915555,
+        "verification_ms": 37.7382084261626,
+        "commit_ms": 0.14720833860337734
+      }
+    },
+    {
+      "label": "chunk-compare-c4-t2-r1-chunks4",
+      "finished": true,
+      "logical_cpus": 14,
+      "parallel": 4,
+      "encoder_threads": 2,
+      "mode": "single-video",
+      "chunk_workers": 4,
+      "chunk_seconds": 5,
+      "valid_jobs": 1,
+      "valid_completed": 1,
+      "unexpected_failures": 0,
+      "restored_jobs": 0,
+      "negative_states": [],
+      "wall_seconds": 3.0198096667882055,
+      "valid_jobs_per_second": 0.33114669808431174,
+      "telemetry_samples": 4,
+      "log_rows": 11,
+      "peak_worker_cpu": 0.0,
+      "mean_app_cpu": 0.6243940766908047,
+      "peak_total_memory_mib": 879.1910018920898,
+      "peak_threads": 60,
+      "peak_read_mib_s": 0.016603209199836846,
+      "peak_write_mib_s": 0.012686507447627945,
+      "thermal_states": [
+        "Nominal"
+      ],
+      "telemetry_dropped_total": 0,
+      "operations_ms": {
+        "actor_ping": {
+          "n": 32,
+          "mean": 0.00634243042441085,
+          "p50": 0.0018958235159516335,
+          "p95": 0.013495655730366703,
+          "max": 0.10991678573191166
+        },
+        "batch_wall": {
+          "n": 1,
+          "mean": 3019.8096667882055,
+          "p50": 3019.8096667882055,
+          "p95": 3019.8096667882055,
+          "max": 3019.8096667882055
+        },
+        "chunk_join": {
+          "n": 1,
+          "mean": 586.1880832817405,
+          "p50": 586.1880832817405,
+          "p95": 586.1880832817405,
+          "max": 586.1880832817405
+        },
+        "chunk_total": {
+          "n": 6,
+          "mean": 1225.5940833128989,
+          "p50": 1256.1352708144113,
+          "p95": 1347.8950416320004,
+          "max": 1357.4295416474342
+        },
+        "chunk_verify": {
+          "n": 6,
+          "mean": 42.37206947679321,
+          "p50": 41.640124982222915,
+          "p95": 51.133489701896906,
+          "max": 54.013208486139774
+        },
+        "command": {
+          "n": 6,
+          "mean": 38.55877777095884,
+          "p50": 0.006395741365849972,
+          "p95": 172.81653126701713,
+          "max": 229.96516665443778
+        },
+        "database_flush": {
+          "n": 8,
+          "mean": 1.342609350103885,
+          "p50": 0.24018750991672277,
+          "p95": 5.667933181393888,
+          "max": 8.136249845847487
+        },
+        "engine_tick": {
+          "n": 13,
+          "mean": 2.0872756408957334,
+          "p50": 0.7182084955275059,
+          "p95": 8.543491642922142,
+          "max": 17.82541675493121
+        },
+        "scenario_config": {
+          "n": 1,
+          "mean": 0.0,
+          "p50": 0.0,
+          "p95": 0.0,
+          "max": 0.0
+        },
+        "telemetry_health": {
+          "n": 9,
+          "mean": 0.0,
+          "p50": 0.0,
+          "p95": 0.0,
+          "max": 0.0
+        }
+      },
+      "phase_totals_ms": {
+        "inspection_ms": 35.37645819596946,
+        "planning_ms": 1.3084167148917913,
+        "preparation_ms": 0.1429582480341196,
+        "encoding_ms": 2937.3412916902453,
+        "verification_ms": 36.77483322098851,
+        "commit_ms": 0.19599986262619495
+      }
+    },
+    {
+      "label": "chunk-compare-c4-t0-r2-chunks1",
+      "finished": true,
+      "logical_cpus": 14,
+      "parallel": 4,
+      "encoder_threads": 0,
+      "mode": "single-video",
+      "chunk_workers": 1,
+      "chunk_seconds": 5,
+      "valid_jobs": 1,
+      "valid_completed": 1,
+      "unexpected_failures": 0,
+      "restored_jobs": 0,
+      "negative_states": [],
+      "wall_seconds": 1.5679967084433883,
+      "valid_jobs_per_second": 0.6377564408236157,
+      "telemetry_samples": 2,
+      "log_rows": 4,
+      "peak_worker_cpu": 0.0,
+      "mean_app_cpu": 0.23070488406259268,
+      "peak_total_memory_mib": 466.00160217285156,
+      "peak_threads": 84,
+      "peak_read_mib_s": 0.0,
+      "peak_write_mib_s": 0.0,
+      "thermal_states": [
+        "Nominal"
+      ],
+      "telemetry_dropped_total": 0,
+      "operations_ms": {
+        "actor_ping": {
+          "n": 18,
+          "mean": 0.022997730411589146,
+          "p50": 0.002666609361767769,
+          "p95": 0.08827504934743009,
+          "max": 0.31295837834477425
+        },
+        "batch_wall": {
+          "n": 1,
+          "mean": 1567.9967084433883,
+          "p50": 1567.9967084433883,
+          "p95": 1567.9967084433883,
+          "max": 1567.9967084433883
+        },
+        "command": {
+          "n": 6,
+          "mean": 44.562868075445294,
+          "p50": 0.006041722372174263,
+          "p95": 200.3853646456264,
+          "max": 267.09041674621403
+        },
+        "database_flush": {
+          "n": 3,
+          "mean": 0.68584728675584,
+          "p50": 0.4040834028273821,
+          "p95": 1.3469833880662918,
+          "max": 1.4517500530928373
+        },
+        "engine_tick": {
+          "n": 8,
+          "mean": 1.0067448602057993,
+          "p50": 0.0012083910405635834,
+          "p95": 3.8237958913668986,
+          "max": 4.07600007019937
+        },
+        "scenario_config": {
+          "n": 1,
+          "mean": 0.0,
+          "p50": 0.0,
+          "p95": 0.0,
+          "max": 0.0
+        },
+        "telemetry_health": {
+          "n": 4,
+          "mean": 0.0,
+          "p50": 0.0,
+          "p95": 0.0,
+          "max": 0.0
+        }
+      },
+      "phase_totals_ms": {
+        "inspection_ms": 35.93283332884312,
+        "planning_ms": 0.24220836348831654,
+        "preparation_ms": 0.19462499767541885,
+        "encoding_ms": 1442.2719166614115,
+        "verification_ms": 37.68466669134796,
+        "commit_ms": 0.1769585069268942
+      }
+    },
+    {
+      "label": "chunk-compare-c4-t0-r2-chunks2",
+      "finished": true,
+      "logical_cpus": 14,
+      "parallel": 4,
+      "encoder_threads": 0,
+      "mode": "single-video",
+      "chunk_workers": 2,
+      "chunk_seconds": 5,
+      "valid_jobs": 1,
+      "valid_completed": 1,
+      "unexpected_failures": 0,
+      "restored_jobs": 0,
+      "negative_states": [],
+      "wall_seconds": 2.399595124879852,
+      "valid_jobs_per_second": 0.41673696934605586,
+      "telemetry_samples": 3,
+      "log_rows": 11,
+      "peak_worker_cpu": 0.0,
+      "mean_app_cpu": 0.689627772189586,
+      "peak_total_memory_mib": 578.5647430419922,
+      "peak_threads": 52,
+      "peak_read_mib_s": 0.017003515373774314,
+      "peak_write_mib_s": 0.02975615190410505,
+      "thermal_states": [
+        "Nominal"
+      ],
+      "telemetry_dropped_total": 0,
+      "operations_ms": {
+        "actor_ping": {
+          "n": 26,
+          "mean": 0.03222274916389814,
+          "p50": 0.0018749851733446121,
+          "p95": 0.013822806067764759,
+          "max": 0.7605415303260088
+        },
+        "batch_wall": {
+          "n": 1,
+          "mean": 2399.595124879852,
+          "p50": 2399.595124879852,
+          "p95": 2399.595124879852,
+          "max": 2399.595124879852
+        },
+        "chunk_join": {
+          "n": 1,
+          "mean": 601.8020834308118,
+          "p50": 601.8020834308118,
+          "p95": 601.8020834308118,
+          "max": 601.8020834308118
+        },
+        "chunk_total": {
+          "n": 6,
+          "mean": 561.4281389086196,
+          "p50": 560.4376250412315,
+          "p95": 593.1397916865535,
+          "max": 598.317833384499
+        },
+        "chunk_verify": {
+          "n": 6,
+          "mean": 39.30920133522401,
+          "p50": 39.663749863393605,
+          "p95": 40.64839583588764,
+          "max": 40.84908333607018
+        },
+        "command": {
+          "n": 6,
+          "mean": 37.38654862778882,
+          "p50": 0.005062436684966087,
+          "p95": 167.86811471683905,
+          "max": 223.58366684056818
+        },
+        "database_flush": {
+          "n": 7,
+          "mean": 0.61329168134502,
+          "p50": 0.24025002494454384,
+          "p95": 1.866791723296045,
+          "max": 2.4326667189598083
+        },
+        "engine_tick": {
+          "n": 11,
+          "mean": 1.3109204486351123,
+          "p50": 0.773250125348568,
+          "p95": 4.049833281897008,
+          "max": 5.477666622027755
+        },
+        "scenario_config": {
+          "n": 1,
+          "mean": 0.0,
+          "p50": 0.0,
+          "p95": 0.0,
+          "max": 0.0
+        },
+        "telemetry_health": {
+          "n": 8,
+          "mean": 0.0,
+          "p50": 0.0,
+          "p95": 0.0,
+          "max": 0.0
+        }
+      },
+      "phase_totals_ms": {
+        "inspection_ms": 35.23037489503622,
+        "planning_ms": 0.683291582390666,
+        "preparation_ms": 0.17625000327825546,
+        "encoding_ms": 2320.0134166982025,
+        "verification_ms": 37.27299999445677,
+        "commit_ms": 0.14979182742536068
+      }
+    },
+    {
+      "label": "chunk-compare-c4-t0-r2-chunks4",
+      "finished": true,
+      "logical_cpus": 14,
+      "parallel": 4,
+      "encoder_threads": 0,
+      "mode": "single-video",
+      "chunk_workers": 4,
+      "chunk_seconds": 5,
+      "valid_jobs": 1,
+      "valid_completed": 1,
+      "unexpected_failures": 0,
+      "restored_jobs": 0,
+      "negative_states": [],
+      "wall_seconds": 2.516826666658744,
+      "valid_jobs_per_second": 0.39732573293478607,
+      "telemetry_samples": 3,
+      "log_rows": 11,
+      "peak_worker_cpu": 0.0,
+      "mean_app_cpu": 0.7068236528498528,
+      "peak_total_memory_mib": 937.6755142211914,
+      "peak_threads": 54,
+      "peak_read_mib_s": 0.0,
+      "peak_write_mib_s": 0.012552213860179951,
+      "thermal_states": [
+        "Nominal"
+      ],
+      "telemetry_dropped_total": 0,
+      "operations_ms": {
+        "actor_ping": {
+          "n": 27,
+          "mean": 0.0031604690270291436,
+          "p50": 0.0017082784324884415,
+          "p95": 0.009837443940341471,
+          "max": 0.0213750172406435
+        },
+        "batch_wall": {
+          "n": 1,
+          "mean": 2516.826666658744,
+          "p50": 2516.826666658744,
+          "p95": 2516.826666658744,
+          "max": 2516.826666658744
+        },
+        "chunk_join": {
+          "n": 1,
+          "mean": 589.788208482787,
+          "p50": 589.788208482787,
+          "p95": 589.788208482787,
+          "max": 589.788208482787
+        },
+        "chunk_total": {
+          "n": 6,
+          "mean": 951.6226458363235,
+          "p50": 1030.4130208678544,
+          "p95": 1062.8029166837223,
+          "max": 1065.3662083204836
+        },
+        "chunk_verify": {
+          "n": 6,
+          "mean": 38.17284720328947,
+          "p50": 38.053729105740786,
+          "p95": 39.77865626802668,
+          "max": 39.94562500156462
+        },
+        "command": {
+          "n": 6,
+          "mean": 37.29818051215261,
+          "p50": 0.0071874819695949554,
+          "p95": 167.46033332310617,
+          "max": 223.03591668605804
+        },
+        "database_flush": {
+          "n": 6,
+          "mean": 0.5136666974673668,
+          "p50": 0.28943747747689486,
+          "p95": 1.4000313240103424,
+          "max": 1.7357501201331615
+        },
+        "engine_tick": {
+          "n": 11,
+          "mean": 1.087189419195056,
+          "p50": 0.6683331448584795,
+          "p95": 3.9166042115539312,
+          "max": 4.198125097900629
+        },
+        "scenario_config": {
+          "n": 1,
+          "mean": 0.0,
+          "p50": 0.0,
+          "p95": 0.0,
+          "max": 0.0
+        },
+        "telemetry_health": {
+          "n": 7,
+          "mean": 0.0,
+          "p50": 0.0,
+          "p95": 0.0,
+          "max": 0.0
+        }
+      },
+      "phase_totals_ms": {
+        "inspection_ms": 34.96454167179763,
+        "planning_ms": 0.6915000267326832,
+        "preparation_ms": 0.2042916603386402,
+        "encoding_ms": 2392.133291810751,
+        "verification_ms": 38.15054148435593,
+        "commit_ms": 0.1607916783541441
+      }
+    },
+    {
+      "label": "chunk-compare-c4-t2-r2-chunks1",
+      "finished": true,
+      "logical_cpus": 14,
+      "parallel": 4,
+      "encoder_threads": 2,
+      "mode": "single-video",
+      "chunk_workers": 1,
+      "chunk_seconds": 5,
+      "valid_jobs": 1,
+      "valid_completed": 1,
+      "unexpected_failures": 0,
+      "restored_jobs": 0,
+      "negative_states": [],
+      "wall_seconds": 5.219816791592166,
+      "valid_jobs_per_second": 0.19157760510115082,
+      "telemetry_samples": 6,
+      "log_rows": 4,
+      "peak_worker_cpu": 237.0951093905683,
+      "mean_app_cpu": 0.23830051482908948,
+      "peak_total_memory_mib": 280.9701232910156,
+      "peak_threads": 37,
+      "peak_read_mib_s": 0.0254312288693865,
+      "peak_write_mib_s": 8.680526120750592,
+      "thermal_states": [
+        "Nominal"
+      ],
+      "telemetry_dropped_total": 0,
+      "operations_ms": {
+        "actor_ping": {
+          "n": 53,
+          "mean": 0.002013356864171208,
+          "p50": 0.0017082784324884415,
+          "p95": 0.002933386713266371,
+          "max": 0.012083211913704872
+        },
+        "batch_wall": {
+          "n": 1,
+          "mean": 5219.816791592166,
+          "p50": 5219.816791592166,
+          "p95": 5219.816791592166,
+          "max": 5219.816791592166
+        },
+        "command": {
+          "n": 6,
+          "mean": 37.898374954238534,
+          "p50": 0.006333226338028908,
+          "p95": 170.40618747705594,
+          "max": 227.1259999834001
+        },
+        "database_flush": {
+          "n": 7,
+          "mean": 0.4513988803539957,
+          "p50": 0.21804170683026314,
+          "p95": 1.0166208725422619,
+          "max": 1.1245834175497293
+        },
+        "engine_tick": {
+          "n": 20,
+          "mean": 0.5299458396621048,
+          "p50": 0.0008749775588512421,
+          "p95": 3.184866742230953,
+          "max": 4.908958449959755
+        },
+        "scenario_config": {
+          "n": 1,
+          "mean": 0.0,
+          "p50": 0.0,
+          "p95": 0.0,
+          "max": 0.0
+        },
+        "telemetry_health": {
+          "n": 8,
+          "mean": 0.0,
+          "p50": 0.0,
+          "p95": 0.0,
+          "max": 0.0
+        }
+      },
+      "phase_totals_ms": {
+        "inspection_ms": 36.23595833778381,
+        "planning_ms": 0.1841250341385603,
+        "preparation_ms": 0.1596666406840086,
+        "encoding_ms": 5132.631041575223,
+        "verification_ms": 37.871458334848285,
+        "commit_ms": 0.15062512829899788
+      }
+    },
+    {
+      "label": "chunk-compare-c4-t2-r2-chunks2",
+      "finished": true,
+      "logical_cpus": 14,
+      "parallel": 4,
+      "encoder_threads": 2,
+      "mode": "single-video",
+      "chunk_workers": 2,
+      "chunk_seconds": 5,
+      "valid_jobs": 1,
+      "valid_completed": 1,
+      "unexpected_failures": 0,
+      "restored_jobs": 0,
+      "negative_states": [],
+      "wall_seconds": 3.9485634583979845,
+      "valid_jobs_per_second": 0.25325666170393046,
+      "telemetry_samples": 5,
+      "log_rows": 11,
+      "peak_worker_cpu": 0.0,
+      "mean_app_cpu": 0.5892114728027777,
+      "peak_total_memory_mib": 443.01766204833984,
+      "peak_threads": 33,
+      "peak_read_mib_s": 0.01684681149655527,
+      "peak_write_mib_s": 0.0165377690894783,
+      "thermal_states": [
+        "Nominal"
+      ],
+      "telemetry_dropped_total": 0,
+      "operations_ms": {
+        "actor_ping": {
+          "n": 41,
+          "mean": 0.008923802297653221,
+          "p50": 0.0016249250620603561,
+          "p95": 0.010916730388998985,
+          "max": 0.2539998386055231
+        },
+        "batch_wall": {
+          "n": 1,
+          "mean": 3948.5634583979845,
+          "p50": 3948.5634583979845,
+          "p95": 3948.5634583979845,
+          "max": 3948.5634583979845
+        },
+        "chunk_join": {
+          "n": 1,
+          "mean": 585.3432500734925,
+          "p50": 585.3432500734925,
+          "p95": 585.3432500734925,
+          "max": 585.3432500734925
+        },
+        "chunk_total": {
+          "n": 6,
+          "mean": 1064.2354375061889,
+          "p50": 1057.4937083292753,
+          "p95": 1128.8885937537998,
+          "max": 1144.621333340183
+        },
+        "chunk_verify": {
+          "n": 6,
+          "mean": 38.36758333879212,
+          "p50": 38.4360000025481,
+          "p95": 38.97172922734171,
+          "max": 39.02120841667056
+        },
+        "command": {
+          "n": 6,
+          "mean": 37.43229170019428,
+          "p50": 0.0077500008046627045,
+          "p95": 168.0852813879028,
+          "max": 223.88400021009147
+        },
+        "database_flush": {
+          "n": 11,
+          "mean": 0.5403674334626306,
+          "p50": 0.23929146118462086,
+          "p95": 1.8339166417717934,
+          "max": 2.6437914930284023
+        },
+        "engine_tick": {
+          "n": 16,
+          "mean": 0.9293281327700242,
+          "p50": 0.7236250676214695,
+          "p95": 2.572250086814165,
+          "max": 4.767999984323978
+        },
+        "scenario_config": {
+          "n": 1,
+          "mean": 0.0,
+          "p50": 0.0,
+          "p95": 0.0,
+          "max": 0.0
+        },
+        "telemetry_health": {
+          "n": 12,
+          "mean": 0.0,
+          "p50": 0.0,
+          "p95": 0.0,
+          "max": 0.0
+        }
+      },
+      "phase_totals_ms": {
+        "inspection_ms": 36.74804186448455,
+        "planning_ms": 0.6539581809192896,
+        "preparation_ms": 0.18395832739770412,
+        "encoding_ms": 3817.0275832526386,
+        "verification_ms": 37.463333224877715,
+        "commit_ms": 0.15616673044860363
+      }
+    },
+    {
+      "label": "chunk-compare-c4-t2-r2-chunks4",
+      "finished": true,
+      "logical_cpus": 14,
+      "parallel": 4,
+      "encoder_threads": 2,
+      "mode": "single-video",
+      "chunk_workers": 4,
+      "chunk_seconds": 5,
+      "valid_jobs": 1,
+      "valid_completed": 1,
+      "unexpected_failures": 0,
+      "restored_jobs": 0,
+      "negative_states": [],
+      "wall_seconds": 2.807840958237648,
+      "valid_jobs_per_second": 0.356145527782191,
+      "telemetry_samples": 4,
+      "log_rows": 11,
+      "peak_worker_cpu": 0.0,
+      "mean_app_cpu": 0.6604896479250344,
+      "peak_total_memory_mib": 880.2222747802734,
+      "peak_threads": 47,
+      "peak_read_mib_s": 0.02125680671545646,
+      "peak_write_mib_s": 0.012754084029273877,
+      "thermal_states": [
+        "Nominal"
+      ],
+      "telemetry_dropped_total": 0,
+      "operations_ms": {
+        "actor_ping": {
+          "n": 30,
+          "mean": 0.0044625019654631615,
+          "p50": 0.0015416881069540977,
+          "p95": 0.020914571359753602,
+          "max": 0.0363748986274004
+        },
+        "batch_wall": {
+          "n": 1,
+          "mean": 2807.840958237648,
+          "p50": 2807.840958237648,
+          "p95": 2807.840958237648,
+          "max": 2807.840958237648
+        },
+        "chunk_join": {
+          "n": 1,
+          "mean": 594.0273331943899,
+          "p50": 594.0273331943899,
+          "p95": 594.0273331943899,
+          "max": 594.0273331943899
+        },
+        "chunk_total": {
+          "n": 6,
+          "mean": 1099.855888906556,
+          "p50": 1089.6665833424777,
+          "p95": 1176.4909584308043,
+          "max": 1180.5554167367518
+        },
+        "chunk_verify": {
+          "n": 6,
+          "mean": 40.98093742504716,
+          "p50": 40.03831243608147,
+          "p95": 46.013624873012304,
+          "max": 46.61387484520674
+        },
+        "command": {
+          "n": 6,
+          "mean": 38.50946528837085,
+          "p50": 0.0075624557211995125,
+          "p95": 172.91639582253993,
+          "max": 230.31445825472474
+        },
+        "database_flush": {
+          "n": 8,
+          "mean": 0.4733281384687871,
+          "p50": 0.46281260438263416,
+          "p95": 0.8389978553168476,
+          "max": 0.8585832547396421
+        },
+        "engine_tick": {
+          "n": 12,
+          "mean": 1.0641249439989526,
+          "p50": 0.7277498953044415,
+          "p95": 2.6739687775261696,
+          "max": 2.862458350136876
+        },
+        "scenario_config": {
+          "n": 1,
+          "mean": 0.0,
+          "p50": 0.0,
+          "p95": 0.0,
+          "max": 0.0
+        },
+        "telemetry_health": {
+          "n": 9,
+          "mean": 0.0,
+          "p50": 0.0,
+          "p95": 0.0,
+          "max": 0.0
+        }
+      },
+      "phase_totals_ms": {
+        "inspection_ms": 35.69245827384293,
+        "planning_ms": 0.6812498904764652,
+        "preparation_ms": 0.19116653129458427,
+        "encoding_ms": 2721.936166519299,
+        "verification_ms": 37.4806250911206,
+        "commit_ms": 0.15312503091990948
+      }
+    }
+  ],
+  "profiles": [
+    {
+      "session": "chunk-compare-c4-t0-r1-chunks1",
+      "source": "synthetic-720p.mp4",
+      "profile": "single-video",
+      "output_format": "mp4",
+      "video_codec": "libx264",
+      "audio_codec": "aac",
+      "crf": 23,
+      "audio_bitrate": "192k",
+      "chunk_workers": 1,
+      "chunk_seconds": null,
+      "input_bytes": 36323812,
+      "output_bytes": 11581758,
+      "output_input_ratio": 0.3188475372573782,
+      "encoding_ms": 1404.4624583330005,
+      "verification_ms": 38.30649983137846,
+      "job_wall_ms": 1443.1819915771484
+    },
+    {
+      "session": "chunk-compare-c4-t0-r1-chunks2",
+      "source": "synthetic-720p.mp4",
+      "profile": "single-video",
+      "output_format": "mp4",
+      "video_codec": "libx264",
+      "audio_codec": "aac",
+      "crf": 23,
+      "audio_bitrate": "192k",
+      "chunk_workers": 2,
+      "chunk_seconds": 5,
+      "input_bytes": 36323812,
+      "output_bytes": 11088906,
+      "output_input_ratio": 0.30527924767367476,
+      "encoding_ms": 2353.888208279386,
+      "verification_ms": 36.41233337111771,
+      "job_wall_ms": 2390.752077102661
+    },
+    {
+      "session": "chunk-compare-c4-t0-r1-chunks4",
+      "source": "synthetic-720p.mp4",
+      "profile": "single-video",
+      "output_format": "mp4",
+      "video_codec": "libx264",
+      "audio_codec": "aac",
+      "crf": 23,
+      "audio_bitrate": "192k",
+      "chunk_workers": 4,
+      "chunk_seconds": 5,
+      "input_bytes": 36323812,
+      "output_bytes": 11074454,
+      "output_input_ratio": 0.3048813819430626,
+      "encoding_ms": 2361.340624978766,
+      "verification_ms": 35.49012495204806,
+      "job_wall_ms": 2397.2201347351074
+    },
+    {
+      "session": "chunk-compare-c4-t2-r1-chunks1",
+      "source": "synthetic-720p.mp4",
+      "profile": "single-video",
+      "output_format": "mp4",
+      "video_codec": "libx264",
+      "audio_codec": "aac",
+      "crf": 23,
+      "audio_bitrate": "192k",
+      "chunk_workers": 1,
+      "chunk_seconds": null,
+      "input_bytes": 36323812,
+      "output_bytes": 11076361,
+      "output_input_ratio": 0.3049338819394837,
+      "encoding_ms": 5085.246166680008,
+      "verification_ms": 36.65525000542402,
+      "job_wall_ms": 5122.302055358887
+    },
+    {
+      "session": "chunk-compare-c4-t2-r1-chunks2",
+      "source": "synthetic-720p.mp4",
+      "profile": "single-video",
+      "output_format": "mp4",
+      "video_codec": "libx264",
+      "audio_codec": "aac",
+      "crf": 23,
+      "audio_bitrate": "192k",
+      "chunk_workers": 2,
+      "chunk_seconds": 5,
+      "input_bytes": 36323812,
+      "output_bytes": 11076755,
+      "output_input_ratio": 0.30494472881866036,
+      "encoding_ms": 3783.474874915555,
+      "verification_ms": 37.7382084261626,
+      "job_wall_ms": 3821.604013442993
+    },
+    {
+      "session": "chunk-compare-c4-t2-r1-chunks4",
+      "source": "synthetic-720p.mp4",
+      "profile": "single-video",
+      "output_format": "mp4",
+      "video_codec": "libx264",
+      "audio_codec": "aac",
+      "crf": 23,
+      "audio_bitrate": "192k",
+      "chunk_workers": 4,
+      "chunk_seconds": 5,
+      "input_bytes": 36323812,
+      "output_bytes": 11076755,
+      "output_input_ratio": 0.30494472881866036,
+      "encoding_ms": 2937.3412916902453,
+      "verification_ms": 36.77483322098851,
+      "job_wall_ms": 2974.5469093322754
+    },
+    {
+      "session": "chunk-compare-c4-t0-r2-chunks1",
+      "source": "synthetic-720p.mp4",
+      "profile": "single-video",
+      "output_format": "mp4",
+      "video_codec": "libx264",
+      "audio_codec": "aac",
+      "crf": 23,
+      "audio_bitrate": "192k",
+      "chunk_workers": 1,
+      "chunk_seconds": null,
+      "input_bytes": 36323812,
+      "output_bytes": 11581758,
+      "output_input_ratio": 0.3188475372573782,
+      "encoding_ms": 1442.2719166614115,
+      "verification_ms": 37.68466669134796,
+      "job_wall_ms": 1480.3721904754639
+    },
+    {
+      "session": "chunk-compare-c4-t0-r2-chunks2",
+      "source": "synthetic-720p.mp4",
+      "profile": "single-video",
+      "output_format": "mp4",
+      "video_codec": "libx264",
+      "audio_codec": "aac",
+      "crf": 23,
+      "audio_bitrate": "192k",
+      "chunk_workers": 2,
+      "chunk_seconds": 5,
+      "input_bytes": 36323812,
+      "output_bytes": 11088906,
+      "output_input_ratio": 0.30527924767367476,
+      "encoding_ms": 2320.0134166982025,
+      "verification_ms": 37.27299999445677,
+      "job_wall_ms": 2357.6741218566895
+    },
+    {
+      "session": "chunk-compare-c4-t0-r2-chunks4",
+      "source": "synthetic-720p.mp4",
+      "profile": "single-video",
+      "output_format": "mp4",
+      "video_codec": "libx264",
+      "audio_codec": "aac",
+      "crf": 23,
+      "audio_bitrate": "192k",
+      "chunk_workers": 4,
+      "chunk_seconds": 5,
+      "input_bytes": 36323812,
+      "output_bytes": 11074454,
+      "output_input_ratio": 0.3048813819430626,
+      "encoding_ms": 2392.133291810751,
+      "verification_ms": 38.15054148435593,
+      "job_wall_ms": 2430.716037750244
+    },
+    {
+      "session": "chunk-compare-c4-t2-r2-chunks1",
+      "source": "synthetic-720p.mp4",
+      "profile": "single-video",
+      "output_format": "mp4",
+      "video_codec": "libx264",
+      "audio_codec": "aac",
+      "crf": 23,
+      "audio_bitrate": "192k",
+      "chunk_workers": 1,
+      "chunk_seconds": null,
+      "input_bytes": 36323812,
+      "output_bytes": 11076361,
+      "output_input_ratio": 0.3049338819394837,
+      "encoding_ms": 5132.631041575223,
+      "verification_ms": 37.871458334848285,
+      "job_wall_ms": 5170.895099639893
+    },
+    {
+      "session": "chunk-compare-c4-t2-r2-chunks2",
+      "source": "synthetic-720p.mp4",
+      "profile": "single-video",
+      "output_format": "mp4",
+      "video_codec": "libx264",
+      "audio_codec": "aac",
+      "crf": 23,
+      "audio_bitrate": "192k",
+      "chunk_workers": 2,
+      "chunk_seconds": 5,
+      "input_bytes": 36323812,
+      "output_bytes": 11076755,
+      "output_input_ratio": 0.30494472881866036,
+      "encoding_ms": 3817.0275832526386,
+      "verification_ms": 37.463333224877715,
+      "job_wall_ms": 3854.905128479004
+    },
+    {
+      "session": "chunk-compare-c4-t2-r2-chunks4",
+      "source": "synthetic-720p.mp4",
+      "profile": "single-video",
+      "output_format": "mp4",
+      "video_codec": "libx264",
+      "audio_codec": "aac",
+      "crf": 23,
+      "audio_bitrate": "192k",
+      "chunk_workers": 4,
+      "chunk_seconds": 5,
+      "input_bytes": 36323812,
+      "output_bytes": 11076755,
+      "output_input_ratio": 0.30494472881866036,
+      "encoding_ms": 2721.936166519299,
+      "verification_ms": 37.4806250911206,
+      "job_wall_ms": 2759.836196899414
+    }
+  ]
+}

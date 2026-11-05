@@ -1,0 +1,9 @@
+{
+  "file": "synthetic-720p.mp4",
+  "bytes": 36323812,
+  "sha256": "09f2794666a4701c8a2c98d5178cae4f597b91229ee04f8f1b5a3eed63464a73",
+  "generator": "lavfi testsrc2 1280x720 30 fps + sine 440 Hz / 48 kHz mono",
+  "duration_seconds": 30.0,
+  "source_video_encoder": "libx264, ultrafast, CRF 18, threads 2",
+  "source_audio_encoder": "aac"
+}

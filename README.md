@@ -2,7 +2,7 @@
 
 A native SwiftUI conversion studio with a responsive, actor-owned work queue. Convert video, extract or convert audio, remux streams, inspect media, process folders, and monitor FFmpeg workers without running conversion work on the main thread.
 
-[Visual guide and mockups](Documentation/UI_GUIDE.md) · [Architecture diagrams](Documentation/DIAGRAMS.md) · [SQLite telemetry](Documentation/TELEMETRY.md) · [Stress-test results](Documentation/STRESS_RESULTS.md) · [Agent instructions](AGENTS.md)
+[Visual guide and mockups](Documentation/UI_GUIDE.md) · [Parallel chunks](Documentation/CHUNKED_CONVERSION.md) · [Architecture diagrams](Documentation/DIAGRAMS.md) · [SQLite telemetry](Documentation/TELEMETRY.md) · [Stress-test results](Documentation/STRESS_RESULTS.md) · [Agent instructions](AGENTS.md)
 
 ![Parallel conversion interface](Documentation/Images/queue.png)
 
@@ -38,7 +38,8 @@ Or run `zsh Scripts/build.sh`. Choose a signing team in Xcode for a signed devel
 | Video | Custom encoder names, CRF, bitrate, encoding speed, scaling, frame rate, deinterlacing, filter chains, explicit stream selection |
 | Audio | Custom encoder names, bitrate, sample rate, channels, mute, all tracks in video containers, explicit track selection, loudness normalization, filters |
 | Output | Per-source or chosen output folder, filename suffix, collision-safe numbering, trim start/duration, metadata/chapters, subtitles, MP4 fast start |
-| Queue | 1–8 conversion slots, independent inspection slots, per-job configuration snapshots, bulk apply/pause/resume/cancel/retry/remove/reorder/duplicate, saved queue and history, CSV report |
+| Queue | 1–8 shared file/chunk worker slots, independent inspection slots, per-job configuration snapshots, bulk apply/pause/resume/cancel/retry/remove/reorder/duplicate, saved queue and history, CSV report |
+| Large files | Optional parallel video chunks with 2–8 requested workers, adjustable length, individual progress, verified joining and continuous audio encoding |
 | Progress | Per-job progress, encoding speed, FPS, estimated remaining time, output byte count, Dock badge |
 | Recovery | Damaged packet tolerance, independent job failures, input/output validation, retained partial files, safe restart after interruption |
 | Logs | Separate tab, levels, search, selected-job filter, follow mode, text export, bounded memory, rotating text logs and persistent SQLite history |
@@ -51,13 +52,21 @@ Or run `zsh Scripts/build.sh`. Choose a signing team in Xcode for a signed devel
 
 1. Choose a preset and defaults in the inspector, then add files or folders. Settings are captured for each new job. Non-media files produce individual inspection failures rather than stopping the batch.
 2. Select one or more jobs. Review detected media, change the settings, and press **Apply to selected jobs**. Active and completed jobs are immutable. Failed and cancelled jobs can be edited before retrying.
-3. Set the number of parallel jobs and start the queue. **Stop queue** stops new launches; running jobs continue. **Pause selected** suspends the FFmpeg process. Paused conversions keep their slot until resumed or cancelled.
+3. Set the queue's **Worker slots** budget and start. A standard conversion uses one slot; a chunked file reserves multiple slots within the same budget. **Stop queue** stops new files; active file workflows continue. **Pause selected** suspends every worker for each selected file. Paused conversions keep their reservation until resumed or cancelled.
 4. Review diagnostics in **Logs** and resource use in **Metrics**. A successfully encoded file can still contain warnings; the app preserves them for review.
 5. Open or reveal a job through its context menu. Export a queue report from **Bulk actions**.
 
 To create several versions of one source, select it, configure the inspector, then choose **Bulk actions → Duplicate with current settings**. Import deduplication does not prevent explicit job duplication. Finished history can be cleared without deleting source, output, or partial files.
 
 **Save defaults for new imports** persists the current settings between launches. Selecting a job loads its captured settings into the inspector. Changing a preset preserves your output folder and filename suffix. It does not silently change existing jobs.
+
+## Parallel chunks for a single large video
+
+In **Video**, enable **Convert this file in parallel chunks**, choose up to 2–8 workers and a chunk length (default 120 seconds), then apply to a pending job. Increase **Worker slots** to allow the desired concurrency. Expand **Chunks** in the job row for individual progress. The final stages join verified video chunks, encode audio continuously, and validate the output before committing it.
+
+This mode supports `libx264`/`libx265` video to MP4/MKV/MOV with regular, seekable timing. It excludes audio-only outputs, stream copy, subtitles, deinterlacing, custom video filters and expert arguments. It uses constant-frame-rate output and frame-aligned trims. Allow disk space for both intermediate video chunks and the final output.
+
+Chunking is off by default because FFmpeg already uses multiple cores. In the local comparison it helped when encoders were limited to two threads, but was slower than automatic-thread standard encoding. A 3 GB size alone does not establish a speedup. See [design, controls, diagram, limitations and measurements](Documentation/CHUNKED_CONVERSION.md).
 
 ## FFmpeg libraries and advanced options
 

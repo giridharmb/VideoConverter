@@ -10,8 +10,10 @@
 		123FD7C9D2F93F8D3BBEF5A3 /* MetricsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845DAA90659B65FA8C0C4924 /* MetricsView.swift */; };
 		2F8BE3AFD1B92BFD179B8529 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2A7DBB365705ECDB2BFB4CF /* Models.swift */; };
 		3B865912552872F538A54F75 /* ConverterCore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 41B1B9D09981E35247258D9B /* ConverterCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		3CA8F3743B7CD88BD9140786 /* ChunkPlanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A112DB569661404109E2004 /* ChunkPlanner.swift */; };
 		42B7AE68A04AC7081AF5E891 /* ConverterCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41B1B9D09981E35247258D9B /* ConverterCore.framework */; };
 		46798618A54605652DDA0E96 /* EngineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB184B94329CE5BB2798B774 /* EngineTests.swift */; };
+		4A23F300940B6D291E75C15A /* ChunkTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C698AF15815BA35D71EB28D /* ChunkTests.swift */; };
 		584FB4581CBAD1F6EF6FB2E3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 612489BD6F8A5DC489C861E2 /* Assets.xcassets */; };
 		632A8DA0E6DCFB7A82DFBD63 /* CommandBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DE5342F22798048480B27AE /* CommandBuilder.swift */; };
 		660AEACB9FDFA184215FA54E /* QueueView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D1E31BD5A40B06A3C70EE15 /* QueueView.swift */; };
@@ -78,6 +80,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		1A112DB569661404109E2004 /* ChunkPlanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChunkPlanner.swift; sourceTree = "<group>"; };
 		2D1E31BD5A40B06A3C70EE15 /* QueueView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueueView.swift; sourceTree = "<group>"; };
 		3D462369CFC5ACC263A56F48 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		3FC30CF38118B24021B054FA /* QueuePersistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueuePersistence.swift; sourceTree = "<group>"; };
@@ -85,6 +88,7 @@
 		47D84DF454AB1AEC0E4DBCA0 /* MediaProbe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaProbe.swift; sourceTree = "<group>"; };
 		5CD1314B7A050DA9118AF410 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		612489BD6F8A5DC489C861E2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		6C698AF15815BA35D71EB28D /* ChunkTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChunkTests.swift; sourceTree = "<group>"; };
 		8332169908D1ECDBFAACD8EC /* EngineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EngineView.swift; sourceTree = "<group>"; };
 		845DAA90659B65FA8C0C4924 /* MetricsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetricsView.swift; sourceTree = "<group>"; };
 		88539B93B9BEF148430777EC /* ProcessRunner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProcessRunner.swift; sourceTree = "<group>"; };
@@ -160,6 +164,7 @@
 		A7C64F3122763DEF8DBD979F /* ConverterCoreTests */ = {
 			isa = PBXGroup;
 			children = (
+				6C698AF15815BA35D71EB28D /* ChunkTests.swift */,
 				B26F28C454321EAC9577F019 /* CommandBuilderTests.swift */,
 				DB184B94329CE5BB2798B774 /* EngineTests.swift */,
 				D5A2EDCF84B08E1DDF32FBC9 /* TelemetryDatabaseTests.swift */,
@@ -171,6 +176,7 @@
 		A89C10448428495C2B281C20 /* ConverterCore */ = {
 			isa = PBXGroup;
 			children = (
+				1A112DB569661404109E2004 /* ChunkPlanner.swift */,
 				8DE5342F22798048480B27AE /* CommandBuilder.swift */,
 				F17C0990F914DF75F305898A /* ConversionEngine.swift */,
 				47D84DF454AB1AEC0E4DBCA0 /* MediaProbe.swift */,
@@ -353,6 +359,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3CA8F3743B7CD88BD9140786 /* ChunkPlanner.swift in Sources */,
 				632A8DA0E6DCFB7A82DFBD63 /* CommandBuilder.swift in Sources */,
 				BD5261B61CC3EDE2CA01D539 /* ConversionEngine.swift in Sources */,
 				FAEA9D0788C056E687584F57 /* MediaProbe.swift in Sources */,
@@ -368,6 +375,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4A23F300940B6D291E75C15A /* ChunkTests.swift in Sources */,
 				C519B37D383E2C923046CB93 /* CommandBuilderTests.swift in Sources */,
 				46798618A54605652DDA0E96 /* EngineTests.swift in Sources */,
 				F3B8BB2CDE8C7350AEFE4EAC /* TelemetryDatabaseTests.swift in Sources */,

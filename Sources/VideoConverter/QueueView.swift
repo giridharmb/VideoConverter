@@ -51,7 +51,7 @@ struct QueueView: View {
                                 Button("Move to front") { store.send(.moveFirst([job.id])) }
                                 Button("Duplicate job") { store.send(.duplicate([job.id], job.settings)) }
                                 Divider()
-                                Button("Copy command") { store.copy(CommandBuilder.display(job.command)) }.disabled(job.command.isEmpty)
+                                Button(job.settings.chunking == nil ? "Copy command" : "Copy first chunk command") { store.copy(CommandBuilder.display(job.command)) }.disabled(job.command.isEmpty)
                                 Button("Remove from queue") { store.send(.remove([job.id])) }.disabled(job.state.isActive)
                             }
                         }
@@ -82,9 +82,9 @@ struct QueueView: View {
                     Circle().fill(store.snapshot.queueRunning ? .green : .secondary).frame(width: 6, height: 6)
                     Text(store.snapshot.queueRunning ? "Queue is running" : "Queue is stopped").font(.caption)
                     Spacer()
-                    Picker("Parallel", selection: Binding(get: { store.snapshot.concurrency }, set: { store.send(.setConcurrency($0)) })) {
-                        ForEach(1...8, id: \.self) { Text("\($0) jobs").tag($0) }
-                    }.frame(width: 140).help("Paused jobs retain their slot. FFmpeg can use multiple CPU threads per job.")
+                    Picker("Worker slots", selection: Binding(get: { store.snapshot.concurrency }, set: { store.send(.setConcurrency($0)) })) {
+                        ForEach(1...8, id: \.self) { Text("\($0)").tag($0) }
+                    }.frame(width: 150).help("Shared conversion budget for files and chunks. Paused work retains its slots. Each worker can use multiple CPU threads.")
                     if store.snapshot.queueRunning {
                         Button("Stop queue") { store.send(.stopScheduling) }.help("Stops launching new jobs; active work continues.")
                     } else {
@@ -102,6 +102,7 @@ struct QueueView: View {
 
 struct JobRow: View {
     let job: ConversionJob
+    @State private var expandedChunks = false
     var body: some View {
         HStack(alignment: .top, spacing: 12) {
             Image(systemName: job.settings.format.audioOnly ? "waveform" : "film.stack")
@@ -132,6 +133,25 @@ struct JobRow: View {
                         if let eta = job.progress.eta { Text("~\(eta.durationLabel) left") }
                     }
                 }.font(.caption2.monospacedDigit()).foregroundStyle(job.state == .failed ? .red : .secondary)
+                if let chunks = job.chunkProgress {
+                    Button { expandedChunks.toggle() } label: {
+                        Label("Chunks · \(chunks.completed)/\(chunks.segments.count) verified · \(chunks.workers) worker slots",
+                              systemImage: expandedChunks ? "chevron.down" : "chevron.right").font(.caption)
+                    }.buttonStyle(.borderless).accessibilityLabel(expandedChunks ? "Hide chunk progress" : "Show chunk progress")
+                    if expandedChunks {
+                        ScrollView {
+                            LazyVStack(spacing: 8) {
+                                ForEach(chunks.segments) { segment in
+                                    HStack {
+                                        Text("Chunk \(segment.id + 1)").frame(width: 65, alignment: .leading)
+                                        ProgressView(value: segment.progress.fraction).accessibilityLabel("Chunk \(segment.id + 1) progress")
+                                        Text(job.state == .paused && segment.state == .running ? "Paused" : segment.state.label).frame(width: 70, alignment: .trailing)
+                                    }.font(.caption2)
+                                }
+                            }.padding(.vertical, 5)
+                        }.frame(height: min(160, CGFloat(chunks.segments.count) * 26))
+                    }
+                }
             }
         }.padding(.vertical, 10).accessibilityElement(children: .contain)
     }

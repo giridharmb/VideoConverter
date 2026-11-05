@@ -108,6 +108,18 @@ struct InspectorView: View {
     private var videoSettings: some View {
         VStack(alignment: .leading, spacing: 16) {
             settingsHeader("Video encoding", icon: "film")
+            Toggle("Convert this file in parallel chunks", isOn: Binding(
+                get: { store.settings.chunking != nil },
+                set: { store.settings.chunking = $0 ? ChunkSettings() : nil }))
+            if store.settings.chunking != nil {
+                Picker("Chunk workers", selection: Binding(get: { store.settings.chunking?.workers ?? 4 }, set: { store.settings.chunking?.workers = $0 })) {
+                    ForEach(2...8, id: \.self) { Text("Up to \($0)").tag($0) }
+                }
+                numericField("Chunk length (seconds)", value: Binding(get: { store.settings.chunking?.seconds ?? 120 }, set: { store.settings.chunking?.seconds = $0 }))
+                helpText("1–3600 seconds per chunk. Workers share the queue's worker slots; increase that limit to use more cores for one file. Audio is encoded once during joining. Temporary video chunks need extra disk space.")
+                helpText("MP4/MKV/MOV with libx264 or libx265. Output is constant frame rate; trims align to frames. Subtitles, audio copy, deinterlacing, custom video filters and expert arguments require standard mode. More workers may use more memory without being faster.")
+                Divider()
+            }
             if store.settings.format.audioOnly { helpText("Video is excluded by the selected audio container.") }
             Picker("Encoder", selection: $store.settings.videoCodec) {
                 ForEach(["libx264", "libx265", "h264_videotoolbox", "hevc_videotoolbox", "libvpx-vp9", "libaom-av1", "mpeg4", "prores_ks", "copy"], id: \.self) { Text($0).tag($0) }
@@ -202,7 +214,12 @@ struct InspectorView: View {
         Task {
             do {
                 reviewedCommand = try await Task.detached(priority: .utility) {
-                    CommandBuilder.display([executable] + (try CommandBuilder.make(job: previewJob)).arguments)
+                    let plan = try CommandBuilder.make(job: previewJob)
+                    if let chunks = plan.chunks {
+                        return "\(chunks.segments.count) video chunks · up to \(chunks.workers) workers, limited by queue slots\nFirst chunk:\n" + CommandBuilder.display([executable] + chunks.segments[0].arguments)
+                            + "\n\nThen join verified chunks and encode continuous audio:\n" + CommandBuilder.display([executable] + chunks.joinArguments)
+                    }
+                    return CommandBuilder.display([executable] + plan.arguments)
                 }.value
             } catch { reviewedCommand = error.localizedDescription }
             reviewing = false

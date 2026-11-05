@@ -79,7 +79,27 @@ public struct ConversionSettings: Codable, Sendable, Equatable {
     public var outputDirectory = ""
     public var extraInputArguments = "[]"
     public var extraOutputArguments = "[]"
+    public var chunking: ChunkSettings? = nil
     public init() {}
+}
+
+public struct ChunkSettings: Codable, Sendable, Equatable {
+    public var workers = 4
+    public var seconds: Double = 120
+    public init(workers: Int = 4, seconds: Double = 120) { self.workers = workers; self.seconds = seconds }
+}
+
+public struct SegmentProgress: Codable, Sendable, Identifiable {
+    public var id: Int
+    public var duration: Double
+    public var state: JobState = .waiting
+    public var progress = JobProgress()
+}
+
+public struct ChunkProgress: Codable, Sendable {
+    public var workers: Int
+    public var segments: [SegmentProgress]
+    public var completed: Int { segments.filter { $0.state == .completed }.count }
 }
 
 public struct MediaStream: Codable, Sendable, Identifiable, Equatable {
@@ -92,6 +112,10 @@ public struct MediaStream: Codable, Sendable, Identifiable, Equatable {
     public var channels: Int?
     public var frameRate: String?
     public var language: String?
+    public var durationSeconds: Double? = nil
+    public var frameCount: Int64? = nil
+    public var startTime: Double? = nil
+    public var nominalFrameRate: String? = nil
     public var id: Int { index }
     public var summary: String {
         var parts = ["#\(index)", kind.uppercased(), codec]
@@ -109,6 +133,7 @@ public struct MediaInfo: Codable, Sendable, Equatable {
     public var format: String
     public var bitRate: Int64
     public var streams: [MediaStream]
+    public var startTime: Double? = nil
     public var hasVideo: Bool { streams.contains { $0.kind == "video" } }
     public var hasAudio: Bool { streams.contains { $0.kind == "audio" } }
     public init(duration: Double, size: Int64, format: String, bitRate: Int64 = 0, streams: [MediaStream]) {
@@ -153,6 +178,8 @@ public struct ConversionJob: Codable, Sendable, Identifiable {
     public var finishedAt: Date?
     public var command: [String] = []
     public var workerPID: Int32?
+    public var workerPIDs: [Int32]? = nil
+    public var chunkProgress: ChunkProgress? = nil
     // Optional so queues written before telemetry was introduced continue to decode.
     public var timings: JobTimings? = JobTimings()
     public init(input: URL, settings: ConversionSettings) { self.input = input; self.settings = settings }

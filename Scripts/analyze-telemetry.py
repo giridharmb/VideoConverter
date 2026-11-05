@@ -52,6 +52,7 @@ def main():
         wall = next((o["duration_ms"] / 1000 for o in operations if o["name"] == "batch_wall"), None)
         summary = {"label": session["label"], "finished": session["finished_at"] is not None, "logical_cpus": session["logical_cpus"],
                    "parallel": config.get("parallel"), "encoder_threads": config.get("threads"), "mode": config.get("mode"),
+                   "chunk_workers": config.get("chunk_workers"), "chunk_seconds": config.get("chunk_seconds"),
                    "valid_jobs": len(valid), "valid_completed": len(completed), "unexpected_failures": len(valid) - len(completed),
                    "restored_jobs": len(jobs) - len(executed),
                    "negative_states": [j["state"] for j in negatives], "wall_seconds": wall,
@@ -85,6 +86,8 @@ def main():
             profile_rows.append({"session": session["label"], "source": Path(job["input_path"]).name,
                 "profile": settings["suffix"].removeprefix("_"), "output_format": job["output_format"], "video_codec": job["video_codec"],
                 "audio_codec": job["audio_codec"], "crf": job["quality"], "audio_bitrate": settings["audioBitrate"],
+                "chunk_workers": (settings.get("chunking") or {}).get("workers", 1),
+                "chunk_seconds": (settings.get("chunking") or {}).get("seconds"),
                 "input_bytes": job["input_bytes"], "output_bytes": job["output_bytes"],
                 "output_input_ratio": job["output_bytes"] / job["input_bytes"] if job["input_bytes"] else None,
                 "encoding_ms": job["encoding_ms"], "verification_ms": job["verification_ms"],

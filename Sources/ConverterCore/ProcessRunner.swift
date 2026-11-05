@@ -40,6 +40,7 @@ public final class ProcessController: @unchecked Sendable {
     private var paused = false
     public init() {}
     public var processIdentifier: Int32? { lock.withLock { process?.isRunning == true ? process?.processIdentifier : nil } }
+    public var isPaused: Bool { lock.withLock { paused } }
     fileprivate func launch(_ process: Process) throws {
         try lock.withLock {
             if cancelled { throw CancellationError() }

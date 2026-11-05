@@ -40,7 +40,7 @@ Database work never runs on MainActor. The engine awaits batch writes on a separ
 
 All durations are monotonic elapsed milliseconds. Unix timestamps exist for joining events and presentation, not calculating phase durations.
 
-- `inspection_ms`: original input probe, including probe process startup. Duplicates reuse detected media and have zero inspection time.
+- `inspection_ms`: input probe, including probe process startup. Standard duplicates reuse detected media and have zero inspection time. Chunk-mode apply/duplicate/retry refreshes timing metadata.
 - `planning_ms`: setting validation, name selection and command construction.
 - `preparation_ms`: destination/staging setup, previous partial cleanup and disk-space check.
 - `encoding_ms`: FFmpeg launch through process exit and pipe/event draining. This includes launch and communication overhead; it is not encoder CPU time alone.
@@ -63,6 +63,10 @@ All durations are monotonic elapsed milliseconds. Unix timestamps exist for join
 | `ui_tab` | Selected native tab, used to isolate comparable GUI observation windows. |
 | `telemetry_health` | Cumulative diagnostic loss counts in JSON: total, worker process stream, and pending log buffer. Other batch/buffer losses contribute to the total. Counts are records/events, not bytes. |
 | `scenario_config`, `batch_wall` | Reproducible benchmark parameters and conversion batch elapsed time; fixture generation/tool detection are outside the batch window. |
+| `chunk_plan` | JSON detail with actual workers, segment count, total frames, fps and attempt number. Requested settings remain in `jobs.settings_json`. |
+| `chunk_total`, `chunk_verify`, `chunk_join` | Segment encode/probe/drain duration (including failures during normal operation), successful per-segment probe, and successful video assembly/continuous audio encode. Segment details are zero-based; final output probing stays in `verification_ms`. |
+
+For chunked jobs, `encoding_ms` covers the complete video-chunk-and-join phase, including intermediate probes. Live resource sampling includes every pool controller PID. Worker processes shorter than the sampling interval can lack a CPU delta. See [Parallel chunks](CHUNKED_CONVERSION.md) for progress weights, shared budgeting and measurements.
 
 ## Durability, contention and retention
 

@@ -125,9 +125,11 @@ final class AppStore: ObservableObject {
         let rows = snapshot.jobs.map { job in
             [job.id.uuidString, job.input.path, job.output?.path ?? "", job.state.rawValue,
              job.settings.format.rawValue, String(job.warningCount), job.message,
-             job.createdAt.ISO8601Format(), job.finishedAt?.ISO8601Format() ?? ""].map(quote).joined(separator: ",")
+             job.createdAt.ISO8601Format(), job.finishedAt?.ISO8601Format() ?? "",
+             String(job.chunkProgress?.workers ?? 1), String(job.chunkProgress?.segments.count ?? 0),
+             String(job.chunkProgress?.completed ?? 0)].map(quote).joined(separator: ",")
         }
-        exportText("id,input,output,status,format,diagnostics,message,created,finished\n" + rows.joined(separator: "\n"), name: "VideoConverter-queue.csv")
+        exportText("id,input,output,status,format,diagnostics,message,created,finished,worker_slots,chunks,verified_chunks\n" + rows.joined(separator: "\n"), name: "VideoConverter-queue.csv")
     }
     func shutdown() async {
         isShuttingDown = true

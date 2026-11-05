@@ -5,6 +5,8 @@ public struct ConversionPlan: Sendable {
     public let output: URL
     public let staging: URL
     public let duration: Double
+    public let chunks: ChunkPlan?
+    public var workerSlots: Int { chunks?.workers ?? 1 }
 }
 
 public enum CommandBuilder {
@@ -19,7 +21,7 @@ public enum CommandBuilder {
         return args
     }
 
-    public static func make(job: ConversionJob, reserved: Set<String> = []) throws -> ConversionPlan {
+    public static func make(job: ConversionJob, reserved: Set<String> = [], workerLimit: Int = 8) throws -> ConversionPlan {
         guard let media = job.media else { throw ConverterError.message("Inspect media before conversion.") }
         let s = job.settings
         guard s.startSeconds.isFinite, s.durationSeconds.isFinite, s.startSeconds >= 0, s.durationSeconds >= 0,
@@ -67,11 +69,28 @@ public enum CommandBuilder {
                 throw ConverterError.message("Video filters and frame rate changes require re-encoding; choose a video encoder instead of copy.")
             }
         } else { args += ["-vn"] }
+        args += try audioArguments(s, media: media, input: 0)
+        if s.subtitles && !s.format.audioOnly {
+            args += ["-map", "0:s?", "-c:s", [.mp4, .mov].contains(s.format) ? "mov_text" : "copy"]
+        } else { args += ["-sn"] }
+        args += ["-map_metadata", s.preserveMetadata ? "0" : "-1", "-map_chapters", s.preserveMetadata ? "0" : "-1"]
+        if s.fastStart && [.mp4, .mov, .m4a].contains(s.format) { args += ["-movflags", "+faststart"] }
+        if s.threads > 0 { args += ["-threads", String(s.threads)] }
+        args += try extraArguments(s.extraOutputArguments)
+        args.append(staging.path)
+        let remaining = max(0, media.duration - s.startSeconds)
+        let duration = s.durationSeconds > 0 ? (remaining > 0 ? min(remaining, s.durationSeconds) : s.durationSeconds) : remaining
+        let chunks = try s.chunking.map { try ChunkPlanner.make(job: job, staging: staging, configuration: $0, workerLimit: workerLimit) }
+        return ConversionPlan(arguments: args, output: output, staging: staging, duration: chunks?.duration ?? duration, chunks: chunks)
+    }
+
+    static func audioArguments(_ s: ConversionSettings, media: MediaInfo, input: Int) throws -> [String] {
+        var args: [String] = []
         if media.hasAudio && !s.mute {
             if let index = s.audioStream, !media.streams.contains(where: { $0.index == index && $0.kind == "audio" }) {
                 throw ConverterError.message("Selected audio stream is unavailable.")
             }
-            let map = s.allAudio && !s.format.audioOnly ? "0:a?" : (s.audioStream.map { "0:\($0)" } ?? "0:a:0?")
+            let map = s.allAudio && !s.format.audioOnly ? "\(input):a?" : (s.audioStream.map { "\(input):\($0)" } ?? "\(input):a:0?")
             args += ["-map", map, "-c:a", s.audioCodec]
             if s.audioCodec != "copy" {
                 if !["flac", "pcm_s16le"].contains(s.audioCodec), !s.audioBitrate.isEmpty { args += ["-b:a", s.audioBitrate] }
@@ -84,17 +103,7 @@ public enum CommandBuilder {
                 throw ConverterError.message("Audio filtering and resampling require an audio encoder instead of copy.")
             }
         } else { args += ["-an"] }
-        if s.subtitles && !s.format.audioOnly {
-            args += ["-map", "0:s?", "-c:s", [.mp4, .mov].contains(s.format) ? "mov_text" : "copy"]
-        } else { args += ["-sn"] }
-        args += ["-map_metadata", s.preserveMetadata ? "0" : "-1", "-map_chapters", s.preserveMetadata ? "0" : "-1"]
-        if s.fastStart && [.mp4, .mov, .m4a].contains(s.format) { args += ["-movflags", "+faststart"] }
-        if s.threads > 0 { args += ["-threads", String(s.threads)] }
-        args += try extraArguments(s.extraOutputArguments)
-        args.append(staging.path)
-        let remaining = max(0, media.duration - s.startSeconds)
-        let duration = s.durationSeconds > 0 ? (remaining > 0 ? min(remaining, s.durationSeconds) : s.durationSeconds) : remaining
-        return ConversionPlan(arguments: args, output: output, staging: staging, duration: duration)
+        return args
     }
 
     public static func display(_ arguments: [String]) -> String {

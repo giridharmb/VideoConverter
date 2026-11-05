@@ -18,11 +18,15 @@ struct Options {
 struct Profile: Sendable {
     var name: String
     var settings: ConversionSettings
-    static func matrix(threads: Int, output: String, flood: Bool) -> [Profile] {
+    static func matrix(threads: Int, output: String, flood: Bool, videoOnly: Bool = false, chunking: ChunkSettings? = nil,
+                       codec: String = "libx264", preset: String = "medium") -> [Profile] {
         func profile(_ name: String, _ change: (inout ConversionSettings) -> Void) -> Profile {
             var s = ConversionSettings(); s.outputDirectory = output; s.suffix = "_\(name)"; s.threads = threads
             change(&s)
             return Profile(name: name, settings: s)
+        }
+        if videoOnly {
+            return [profile("single-video") { $0.videoCodec = codec; $0.encoderPreset = preset; $0.chunking = chunking }]
         }
         if flood {
             return (0..<4).map { n in profile("debug-remux-\(n)") {
@@ -76,8 +80,16 @@ struct StressMain {
         try FileManager.default.createDirectory(at: output, withIntermediateDirectories: true)
         let valid = try FileManager.default.contentsOfDirectory(at: fixtures, includingPropertiesForKeys: nil)
             .filter { ["mp4", "mkv", "mov", "webm", "avi"].contains($0.pathExtension.lowercased()) }.sorted { $0.path < $1.path }
-        guard valid.count >= 5 else { throw ConverterError.message("Generate the five format fixtures before running the benchmark.") }
-        let profiles = Profile.matrix(threads: threads, output: output.path, flood: options.values["--mode"] == "log-flood")
+        let videoOnly = options.values["--mode"] == "single-video"
+        guard valid.count >= (videoOnly ? 1 : 5) else { throw ConverterError.message("Provide video fixtures; the full matrix needs five formats.") }
+        let chunkWorkers = options.integer("--chunk-workers", default: 1)
+        let chunkSeconds = Double(options.values["--chunk-seconds"] ?? "120") ?? .nan
+        guard (1...8).contains(chunkWorkers), chunkSeconds.isFinite, (1...3600).contains(chunkSeconds) else {
+            throw ConverterError.message("Use 1–8 chunk workers (1 = standard mode) and 1–3600 seconds.")
+        }
+        let profiles = Profile.matrix(threads: threads, output: output.path, flood: options.values["--mode"] == "log-flood",
+            videoOnly: videoOnly, chunking: chunkWorkers > 1 ? ChunkSettings(workers: chunkWorkers, seconds: chunkSeconds) : nil,
+            codec: options.values["--codec"] ?? "libx264", preset: options.values["--encoder-preset"] ?? "medium")
         let negative = options.values["--negative"] == "true"
         var inputs = valid
         if negative { inputs += [fixtures.appendingPathComponent("negative/invalid.bin"), fixtures.appendingPathComponent("negative/truncated.mp4")] }
@@ -92,6 +104,7 @@ struct StressMain {
             }
             let config: [String: Any] = ["parallel": parallel, "threads": threads, "label": label, "mode": options.values["--mode"] ?? "matrix",
                 "fixtures": valid.count, "profiles": profiles.map(\.name), "ffmpeg": initialized.engineDescription,
+                "chunk_workers": chunkWorkers, "chunk_seconds": chunkSeconds,
                 "os": ProcessInfo.processInfo.operatingSystemVersionString, "build": "release", "negative_cases": negative]
             let configJSON = String(decoding: try JSONSerialization.data(withJSONObject: config, options: .sortedKeys), as: UTF8.self)
             await engine.recordPerformance(name: "scenario_config", durationMs: 0, detail: configJSON)
