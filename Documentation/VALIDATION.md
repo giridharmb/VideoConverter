@@ -14,6 +14,8 @@ Validated on the current Apple Silicon Mac with Xcode 27.1, Swift 6.4, macOS SDK
 - Reviewed diagnostic log lines; FFmpeg's realtime-input lag warnings remained visible on successful jobs.
 - Duplicated the two completed jobs through the bulk-action menu and converted again. Four jobs completed, with numbered destination files and preserved source files.
 - Quit/relaunch restored completed queue history with scheduling stopped.
+- A separate source-only Git checkout, containing only the tracked Tools placeholder and no local FFmpeg bundle, built directly with the included Xcode project and passed all 20 Xcode tests with zero failures. Runtime integration tests used installed FFmpeg from the host. XcodeGen regeneration was not required.
+- All six architecture Mermaid diagrams and the UI workflow Mermaid diagram rendered successfully with Mermaid CLI 11.4.2. Both editable SVG mockups were parsed and visually reviewed; relative Markdown documentation links were checked. The public Git file list excludes binaries, sample media, build outputs, logs and the machine-specific log screenshot.
 - Saved public interface screenshots: [queue](Images/queue.png) and [metrics](Images/metrics.png). A separate log screenshot remains local and is excluded from Git because its command lines contain machine-specific paths; the public visual guide uses a fictional log mockup.
 
 The only Xcode build notices were App Intents metadata extraction being skipped because the app does not use App Intents. No Swift compilation warnings were reported.
