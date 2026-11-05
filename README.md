@@ -4,6 +4,8 @@ A native SwiftUI conversion studio with a responsive, actor-owned work queue. Co
 
 [Visual guide and mockups](Documentation/UI_GUIDE.md) · [Parallel chunks](Documentation/CHUNKED_CONVERSION.md) · [Architecture diagrams](Documentation/DIAGRAMS.md) · [SQLite telemetry](Documentation/TELEMETRY.md) · [Stress-test results](Documentation/STRESS_RESULTS.md) · [Agent instructions](AGENTS.md)
 
+Planning a Rust version? [Rust + GPUI Kit implementation handoff](RUST_GPUI_IMPLEMENTATION.md) specifies the matching UI, complete option set, engine, telemetry and acceptance tests for implementation in a separate chat. The Rust application is not implemented yet.
+
 ![Parallel conversion interface](Documentation/Images/queue.png)
 
 ## Open and run
