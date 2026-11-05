@@ -1,0 +1,20 @@
+.DS_Store
+.build/
+build/
+DerivedData/
+*.xcuserstate
+xcuserdata/
+Resources/Tools/*
+!Resources/Tools/.gitkeep
+.env
+.env.*
+!.env.example
+*.p12
+*.p8
+*.mobileprovision
+*.provisionprofile
+*.log
+*.xcresult/
+__pycache__/
+# Local log screenshot includes machine-specific filesystem paths.
+/Documentation/Images/logs.png

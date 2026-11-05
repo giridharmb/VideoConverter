@@ -1,0 +1,61 @@
+name: VideoConverter
+options:
+  bundleIdPrefix: com.local
+  deploymentTarget:
+    macOS: '14.0'
+settings:
+  base:
+    SWIFT_VERSION: '6.0'
+    MACOSX_DEPLOYMENT_TARGET: '14.0'
+    CODE_SIGN_STYLE: Automatic
+    ENABLE_HARDENED_RUNTIME: YES
+    SWIFT_STRICT_CONCURRENCY: complete
+    DEVELOPMENT_TEAM: ''
+targets:
+  ConverterCore:
+    type: framework
+    platform: macOS
+    sources: [Sources/ConverterCore]
+    settings:
+      base:
+        GENERATE_INFOPLIST_FILE: YES
+        PRODUCT_BUNDLE_IDENTIFIER: com.local.VideoConverter.Core
+  VideoConverter:
+    type: application
+    platform: macOS
+    sources:
+      - path: Sources/VideoConverter
+      - path: Resources/Assets.xcassets
+        optional: true
+      - path: Resources/Tools
+        type: folder
+        optional: true
+    dependencies:
+      - target: ConverterCore
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.local.VideoConverter
+        PRODUCT_NAME: VideoConverter
+        GENERATE_INFOPLIST_FILE: YES
+        INFOPLIST_KEY_CFBundleDisplayName: VideoConverter
+        INFOPLIST_KEY_LSApplicationCategoryType: public.app-category.video
+        INFOPLIST_KEY_NSHighResolutionCapable: YES
+        ENABLE_APP_SANDBOX: NO
+        COMBINE_HIDPI_IMAGES: YES
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+  ConverterCoreTests:
+    type: bundle.unit-test
+    platform: macOS
+    sources: [Tests/ConverterCoreTests]
+    dependencies:
+      - target: ConverterCore
+    settings:
+      base:
+        GENERATE_INFOPLIST_FILE: YES
+schemes:
+  VideoConverter:
+    build:
+      targets:
+        VideoConverter: all
+    test:
+      targets: [ConverterCoreTests]

@@ -1,0 +1,89 @@
+<?xml version="1.0" ?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="1070" viewBox="0 0 1440 1070" role="img" aria-labelledby="title desc">
+  <title id="title">Observability view map</title>
+  <desc id="desc">Three editable mockups showing log filtering and diagnostics, real-time metrics charts, and FFmpeg engine discovery and capability search.</desc>
+  <g font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">
+    <rect x="0" y="0" width="1440" height="1070" rx="0" fill="#edf3f8" stroke="none"/>
+    <text x="40" y="47" font-size="14" font-weight="700" fill="#087e8b">VIDEOCONVERTER / OBSERVABILITY MAP</text>
+    <text x="40" y="83" font-size="28" font-weight="700" fill="#233348">Understand a job. Understand its workload.</text>
+    <text x="40" y="112" font-size="14" font-weight="400" fill="#63758a">Documentation mockups · illustrative data · available in separate application views</text>
+    <rect x="32" y="145" width="1376" height="272" rx="16" fill="#ffffff" stroke="#d5e0e9"/>
+    <rect x="32" y="145" width="205" height="272" rx="16" fill="#14263e" stroke="none"/>
+    <rect x="221" y="145" width="16" height="272" rx="0" fill="#14263e" stroke="none"/>
+    <text x="55" y="184" font-size="17" font-weight="700" fill="#6edce8">LOGS</text>
+    <text x="55" y="215" font-size="12" font-weight="400" fill="#a3b9cf">Convert</text>
+    <text x="55" y="246" font-size="12" font-weight="400" fill="#6edce8">Logs</text>
+    <text x="55" y="277" font-size="12" font-weight="400" fill="#a3b9cf">Metrics</text>
+    <text x="55" y="308" font-size="12" font-weight="400" fill="#a3b9cf">Engine</text>
+    <text x="260" y="180" font-size="18" font-weight="600" fill="#233348">Find the cause of warnings or failures</text>
+    <rect x="32" y="444" width="1376" height="272" rx="16" fill="#ffffff" stroke="#d5e0e9"/>
+    <rect x="32" y="444" width="205" height="272" rx="16" fill="#14263e" stroke="none"/>
+    <rect x="221" y="444" width="16" height="272" rx="0" fill="#14263e" stroke="none"/>
+    <text x="55" y="483" font-size="17" font-weight="700" fill="#6edce8">METRICS</text>
+    <text x="55" y="514" font-size="12" font-weight="400" fill="#a3b9cf">Convert</text>
+    <text x="55" y="545" font-size="12" font-weight="400" fill="#a3b9cf">Logs</text>
+    <text x="55" y="576" font-size="12" font-weight="400" fill="#6edce8">Metrics</text>
+    <text x="55" y="607" font-size="12" font-weight="400" fill="#a3b9cf">Engine</text>
+    <text x="260" y="479" font-size="18" font-weight="600" fill="#233348">Inspect live process counters and retained history</text>
+    <rect x="32" y="743" width="1376" height="272" rx="16" fill="#ffffff" stroke="#d5e0e9"/>
+    <rect x="32" y="743" width="205" height="272" rx="16" fill="#14263e" stroke="none"/>
+    <rect x="221" y="743" width="16" height="272" rx="0" fill="#14263e" stroke="none"/>
+    <text x="55" y="782" font-size="17" font-weight="700" fill="#6edce8">ENGINE</text>
+    <text x="55" y="813" font-size="12" font-weight="400" fill="#a3b9cf">Convert</text>
+    <text x="55" y="844" font-size="12" font-weight="400" fill="#a3b9cf">Logs</text>
+    <text x="55" y="875" font-size="12" font-weight="400" fill="#a3b9cf">Metrics</text>
+    <text x="55" y="906" font-size="12" font-weight="400" fill="#6edce8">Engine</text>
+    <text x="260" y="778" font-size="18" font-weight="600" fill="#233348">Confirm tools and available codecs before converting</text>
+    <rect x="260" y="196" width="1124" height="33" rx="6" fill="#f6f9fc" stroke="#e2eaf1"/>
+    <text x="275" y="217" font-size="12" font-weight="400" fill="#63758a">Search logs…              Level: All ▾              Selected jobs ☐              Follow ✓</text>
+    <text x="1255" y="217" font-size="12" font-weight="600" fill="#087e8b">Export…</text>
+    <text x="275" y="254" font-size="12" font-weight="400" fill="#63758a">10:14:02</text>
+    <text x="376" y="254" font-size="11" font-weight="700" fill="#087e8b">INFO</text>
+    <text x="482" y="254" font-size="12" font-weight="400" fill="#233348">Job started · source: Sample_Interview.mov</text>
+    <line x1="275" y1="266" x2="1369" y2="266" stroke="#dce6ee"/>
+    <text x="275" y="287" font-size="12" font-weight="400" fill="#63758a">10:14:09</text>
+    <text x="376" y="287" font-size="11" font-weight="700" fill="#a56808">WARNING</text>
+    <text x="482" y="287" font-size="12" font-weight="400" fill="#233348">Corrupt packet discarded; decoding continues</text>
+    <line x1="275" y1="299" x2="1369" y2="299" stroke="#dce6ee"/>
+    <text x="275" y="320" font-size="12" font-weight="400" fill="#63758a">10:14:34</text>
+    <text x="376" y="320" font-size="11" font-weight="700" fill="#087e8b">INFO</text>
+    <text x="482" y="320" font-size="12" font-weight="400" fill="#233348">Output verified and committed without replacement</text>
+    <line x1="275" y1="332" x2="1369" y2="332" stroke="#dce6ee"/>
+    <text x="275" y="353" font-size="12" font-weight="400" fill="#63758a">10:14:34</text>
+    <text x="376" y="353" font-size="11" font-weight="700" fill="#087e8b">INFO</text>
+    <text x="482" y="353" font-size="12" font-weight="400" fill="#233348">Completed with diagnostics · review output</text>
+    <line x1="275" y1="365" x2="1369" y2="365" stroke="#dce6ee"/>
+    <text x="275" y="396" font-size="11" font-weight="400" fill="#63758a">2,000 live entries · rotating disk log · text export</text>
+    <rect x="260" y="497" width="316" height="56" rx="8" fill="#f6f9fc" stroke="none"/>
+    <text x="275" y="521" font-size="11" font-weight="400" fill="#63758a">CPU · one core = 100%</text>
+    <text x="275" y="544" font-size="20" font-weight="700" fill="#087e8b">168%</text>
+    <rect x="589" y="497" width="316" height="56" rx="8" fill="#f6f9fc" stroke="none"/>
+    <text x="604" y="521" font-size="11" font-weight="400" fill="#63758a">Physical memory footprint</text>
+    <text x="604" y="544" font-size="20" font-weight="700" fill="#8c54c3">684 MB</text>
+    <rect x="918" y="497" width="466" height="56" rx="8" fill="#f6f9fc" stroke="none"/>
+    <text x="933" y="521" font-size="11" font-weight="400" fill="#63758a">Workers / threads / thermal / disk free</text>
+    <text x="933" y="544" font-size="19" font-weight="700" fill="#233348">2 / 48 / Nominal / 120 GB</text>
+    <rect x="260" y="567" width="368" height="120" rx="8" fill="#ffffff" stroke="#e2eaf1"/>
+    <text x="274" y="590" font-size="12" font-weight="600" fill="#233348">CPU · App and workers</text>
+    <line x1="276" y1="666" x2="610" y2="666" stroke="#dce6ee"/>
+    <polyline points="0,66 36,45 72,55 108,22 144,35 180,18 216,25 252,21 288,30" transform="translate(295,594)" fill="none" stroke="#087e8b" stroke-width="2.5"/>
+    <rect x="638" y="567" width="368" height="120" rx="8" fill="#ffffff" stroke="#e2eaf1"/>
+    <text x="652" y="590" font-size="12" font-weight="600" fill="#233348">Memory · MiB</text>
+    <line x1="654" y1="666" x2="988" y2="666" stroke="#dce6ee"/>
+    <polyline points="0,67 36,63 72,62 108,31 144,29 180,28 216,33 252,30 288,28" transform="translate(673,594)" fill="none" stroke="#8c54c3" stroke-width="2.5"/>
+    <rect x="1016" y="567" width="368" height="120" rx="8" fill="#ffffff" stroke="#e2eaf1"/>
+    <text x="1030" y="590" font-size="12" font-weight="600" fill="#233348">Disk I/O · MiB/s</text>
+    <line x1="1032" y1="666" x2="1366" y2="666" stroke="#dce6ee"/>
+    <polyline points="0,70 36,68 72,29 108,66 144,64 180,15 216,65 252,45 288,70" transform="translate(1051,594)" fill="none" stroke="#c77b16" stroke-width="2.5"/>
+    <text x="275" y="710" font-size="11" font-weight="400" fill="#63758a">300 real samples · CPU uses hardware timebase scaling · no GPU/network/power counters</text>
+    <rect x="260" y="798" width="1124" height="54" rx="8" fill="#f5fbfc" stroke="#c9e9ef"/>
+    <text x="275" y="821" font-size="14" font-weight="600" fill="#087e8b">FFmpeg + ffprobe: detected build</text>
+    <text x="275" y="842" font-size="12" font-weight="400" fill="#63758a">Bundled Tools directory or selected local installation</text>
+    <text x="260" y="882" font-size="12" font-weight="400" fill="#233348">Choose FFmpeg folder…      Auto-detect again      Keep Mac awake while converting ✓</text>
+    <rect x="260" y="899" width="1124" height="32" rx="6" fill="#f6f9fc" stroke="#e2eaf1"/>
+    <text x="275" y="920" font-size="12" font-weight="400" fill="#63758a">Search encoders, decoders, formats, filters or hardware backends…</text>
+    <text x="275" y="957" font-size="13" font-weight="400" fill="#233348">libx264 · libx265 · h264_videotoolbox · aac · flac · scale · loudnorm · …</text>
+    <text x="275" y="986" font-size="11" font-weight="400" fill="#63758a">Availability comes from the installed build. Compatibility is validated when FFmpeg runs.</text>
+    <text x="40" y="1048" font-size="13" font-weight="400" fill="#63758a">Source: LogsView + MetricsView + EngineView · These drawings use fictional values; use the app for real measurements.</text>
+  </g>
+</svg>

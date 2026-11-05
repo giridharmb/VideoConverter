@@ -1,0 +1,109 @@
+<?xml version="1.0" ?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="950" viewBox="0 0 1440 950" role="img" aria-labelledby="title desc">
+  <title id="title">Conversion workspace map</title>
+  <desc id="desc">Annotated mockup of navigation, queue summary, conversion rows, detailed settings and async queue controls.</desc>
+  <g font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">
+    <rect x="0" y="0" width="1440" height="950" rx="0" fill="#edf3f8" stroke="none"/>
+    <text x="40" y="48" font-size="14" font-weight="700" fill="#087e8b">VIDEOCONVERTER / WORKSPACE MAP</text>
+    <text x="40" y="82" font-size="26" font-weight="700" fill="#233348">A clear queue. Detailed controls. Work that keeps moving.</text>
+    <text x="40" y="111" font-size="14" font-weight="400" fill="#63758a">Documentation mockup · illustrative values · native SwiftUI implementation</text>
+    <rect x="32" y="140" width="1376" height="750" rx="20" fill="#ffffff" stroke="#d5e0e9"/>
+    <rect x="32" y="140" width="210" height="750" rx="20" fill="#14263e" stroke="none"/>
+    <rect x="222" y="140" width="20" height="750" rx="0" fill="#14263e" stroke="none"/>
+    <text x="57" y="188" font-size="21" font-weight="700" fill="white">VideoConverter</text>
+    <text x="57" y="211" font-size="10" font-weight="600" fill="#8ba9c2">LOCAL CONVERSION STUDIO</text>
+    <rect x="57" y="235" width="28" height="27" rx="7" fill="#087e8b" stroke="none"/>
+    <text x="66" y="254" font-size="13" font-weight="700" fill="white">1</text>
+    <rect x="49" y="258" width="174" height="40" rx="9" fill="#214760" stroke="none"/>
+    <text x="66" y="283" font-size="16" font-weight="600" fill="#62d7e5">Convert</text>
+    <text x="66" y="334" font-size="16" font-weight="600" fill="#c5d3e1">Logs</text>
+    <text x="66" y="385" font-size="16" font-weight="600" fill="#c5d3e1">Metrics</text>
+    <text x="66" y="436" font-size="16" font-weight="600" fill="#c5d3e1">Engine</text>
+    <text x="56" y="822" font-size="13" font-weight="600" fill="#6ee5b4">FFmpeg connected</text>
+    <text x="56" y="847" font-size="11" font-weight="400" fill="#9cb3c9">Media stays on your Mac</text>
+    <line x1="1002" y1="140" x2="1002" y2="890" stroke="#dce6ee"/>
+    <rect x="269" y="166" width="28" height="27" rx="7" fill="#087e8b" stroke="none"/>
+    <text x="278" y="185" font-size="13" font-weight="700" fill="white">2</text>
+    <text x="309" y="186" font-size="12" font-weight="700" fill="#087e8b">CONVERSION STUDIO</text>
+    <text x="269" y="228" font-size="28" font-weight="700" fill="#233348">Make every format fit.</text>
+    <text x="269" y="253" font-size="14" font-weight="400" fill="#63758a">Drop media, choose settings, start the queue.</text>
+    <rect x="843" y="183" width="130" height="38" rx="12" fill="#d9f5f8" stroke="none"/>
+    <text x="861" y="208" font-size="14" font-weight="600" fill="#087e8b">+ Add media</text>
+    <rect x="269" y="276" width="225" height="83" rx="12" fill="#f6f9fc" stroke="#e2eaf1"/>
+    <text x="287" y="311" font-size="25" font-weight="700" fill="#233348">4</text>
+    <text x="287" y="337" font-size="12" font-weight="400" fill="#63758a">In queue</text>
+    <rect x="508" y="276" width="225" height="83" rx="12" fill="#f6f9fc" stroke="#e2eaf1"/>
+    <text x="526" y="311" font-size="25" font-weight="700" fill="#233348">2</text>
+    <text x="526" y="337" font-size="12" font-weight="400" fill="#63758a">Converting</text>
+    <rect x="747" y="276" width="225" height="83" rx="12" fill="#f6f9fc" stroke="#e2eaf1"/>
+    <text x="765" y="311" font-size="25" font-weight="700" fill="#233348">8</text>
+    <text x="765" y="337" font-size="12" font-weight="400" fill="#63758a">Completed</text>
+    <rect x="269" y="380" width="704" height="39" rx="8" fill="#f6f9fc" stroke="#e2eaf1"/>
+    <text x="284" y="404" font-size="13" font-weight="400" fill="#63758a">Find media…</text>
+    <text x="858" y="404" font-size="12" font-weight="400" fill="#63758a">All statuses</text>
+    <rect x="269" y="435" width="28" height="27" rx="7" fill="#087e8b" stroke="none"/>
+    <text x="278" y="454" font-size="13" font-weight="700" fill="white">3</text>
+    <rect x="269" y="478" width="704" height="84" rx="9" fill="#f5fbfc" stroke="#c9e9ef"/>
+    <text x="285" y="501" font-size="15" font-weight="600" fill="#233348">Sample_Interview.mov</text>
+    <text x="285" y="521" font-size="11" font-weight="400" fill="#63758a">MOV → MP4 · 12:30 · 1.2 GB</text>
+    <text x="883" y="501" font-size="12" font-weight="600" fill="#0e9cad">Running</text>
+    <text x="285" y="543" font-size="11" font-weight="400" fill="#63758a">62% · 2.1× · 63 fps · ~2:16 left</text>
+    <rect x="606" y="533" width="346" height="6" rx="3" fill="#e2edf2" stroke="none"/>
+    <rect x="606" y="533" width="215" height="6" rx="3" fill="#0e9cad" stroke="none"/>
+    <rect x="269" y="573" width="704" height="84" rx="9" fill="#ffffff" stroke="#e5ecf2"/>
+    <text x="285" y="596" font-size="15" font-weight="600" fill="#233348">Sample_Travel.mkv</text>
+    <text x="285" y="616" font-size="11" font-weight="400" fill="#63758a">MKV → MP4 · 08:40 · 840 MB</text>
+    <text x="883" y="596" font-size="12" font-weight="600" fill="#0e9cad">Running</text>
+    <text x="285" y="638" font-size="11" font-weight="400" fill="#63758a">38% · 1.7× · 51 fps · ~3:10 left</text>
+    <rect x="606" y="628" width="346" height="6" rx="3" fill="#e2edf2" stroke="none"/>
+    <rect x="606" y="628" width="131" height="6" rx="3" fill="#0e9cad" stroke="none"/>
+    <rect x="269" y="668" width="704" height="84" rx="9" fill="#ffffff" stroke="#e5ecf2"/>
+    <text x="285" y="691" font-size="15" font-weight="600" fill="#233348">Sample_Audio.wav</text>
+    <text x="285" y="711" font-size="11" font-weight="400" fill="#63758a">WAV → FLAC · 03:20 · 48 MB</text>
+    <text x="883" y="691" font-size="12" font-weight="600" fill="#6d7e91">Ready</text>
+    <text x="285" y="733" font-size="11" font-weight="400" fill="#63758a">Waiting for a conversion slot</text>
+    <line x1="269" y1="796" x2="973" y2="796" stroke="#dce6ee"/>
+    <rect x="269" y="816" width="28" height="27" rx="7" fill="#087e8b" stroke="none"/>
+    <text x="278" y="835" font-size="13" font-weight="700" fill="white">5</text>
+    <text x="308" y="836" font-size="13" font-weight="600" fill="#233348">Bulk actions ▾</text>
+    <text x="516" y="836" font-size="12" font-weight="400" fill="#63758a">Parallel: 2 jobs ▾</text>
+    <text x="692" y="836" font-size="12" font-weight="400" fill="#087e8b">Queue running</text>
+    <rect x="842" y="809" width="131" height="42" rx="9" fill="#14263e" stroke="none"/>
+    <text x="862" y="835" font-size="14" font-weight="600" fill="white">Stop queue</text>
+    <rect x="1025" y="166" width="28" height="27" rx="7" fill="#087e8b" stroke="none"/>
+    <text x="1034" y="185" font-size="13" font-weight="700" fill="white">4</text>
+    <text x="1066" y="187" font-size="19" font-weight="700" fill="#233348">Conversion settings</text>
+    <text x="1025" y="218" font-size="12" font-weight="400" fill="#63758a">1 selected · 0 editable</text>
+    <rect x="1025" y="238" width="357" height="38" rx="8" fill="#f4f7fa" stroke="#e2eaf1"/>
+    <text x="1038" y="263" font-size="14" font-weight="400" fill="#233348">MP4 · Balanced                         ▾</text>
+    <rect x="1025" y="299" width="85" height="31" rx="6" fill="#087e8b" stroke="none"/>
+    <text x="1040" y="320" font-size="12" font-weight="600" fill="white">Output</text>
+    <rect x="1114" y="299" width="85" height="31" rx="6" fill="#edf2f7" stroke="none"/>
+    <text x="1129" y="320" font-size="12" font-weight="600" fill="#63758a">Video</text>
+    <rect x="1203" y="299" width="85" height="31" rx="6" fill="#edf2f7" stroke="none"/>
+    <text x="1218" y="320" font-size="12" font-weight="600" fill="#63758a">Audio</text>
+    <rect x="1292" y="299" width="85" height="31" rx="6" fill="#edf2f7" stroke="none"/>
+    <text x="1307" y="320" font-size="12" font-weight="600" fill="#63758a">Expert</text>
+    <text x="1025" y="369" font-size="11" font-weight="700" fill="#63758a">DESTINATION</text>
+    <text x="1025" y="399" font-size="13" font-weight="400" fill="#233348">Container</text>
+    <text x="1261" y="399" font-size="13" font-weight="600" fill="#087e8b">MP4 · Video</text>
+    <text x="1025" y="437" font-size="12" font-weight="400" fill="#63758a">Output folder</text>
+    <rect x="1025" y="449" width="357" height="37" rx="7" fill="#f6f9fc" stroke="#e2eaf1"/>
+    <text x="1037" y="473" font-size="13" font-weight="400" fill="#233348">Alongside source files</text>
+    <text x="1025" y="513" font-size="12" font-weight="400" fill="#63758a">Filename suffix</text>
+    <rect x="1025" y="526" width="357" height="35" rx="7" fill="#f6f9fc" stroke="#e2eaf1"/>
+    <text x="1037" y="549" font-size="13" font-weight="400" fill="#233348">_converted</text>
+    <text x="1025" y="586" font-size="11" font-weight="400" fill="#63758a">Existing files get safe, numbered names.</text>
+    <line x1="1025" y1="604" x2="1382" y2="604" stroke="#dce6ee"/>
+    <text x="1025" y="634" font-size="11" font-weight="700" fill="#63758a">TIME RANGE</text>
+    <text x="1025" y="662" font-size="12" font-weight="400" fill="#233348">Start: 0 sec              Duration: rest</text>
+    <line x1="1025" y1="683" x2="1382" y2="683" stroke="#dce6ee"/>
+    <text x="1025" y="714" font-size="11" font-weight="700" fill="#63758a">RECOVERY &amp; COMPATIBILITY</text>
+    <text x="1025" y="744" font-size="12" font-weight="400" fill="#233348">✓ Recover damaged packets where possible</text>
+    <text x="1025" y="772" font-size="12" font-weight="400" fill="#233348">✓ Preserve metadata and chapters</text>
+    <text x="1025" y="800" font-size="12" font-weight="400" fill="#233348">✓ Optimize MP4/MOV for streaming</text>
+    <rect x="1025" y="825" width="357" height="40" rx="8" fill="#edf2f7" stroke="none"/>
+    <text x="1090" y="851" font-size="14" font-weight="600" fill="#087e8b">Apply to 0 selected jobs</text>
+    <text x="40" y="925" font-size="13" font-weight="400" fill="#63758a">Source: QueueView + InspectorView · Start/Stop controls scheduling; Pause/Resume/Cancel are per-job actions.</text>
+  </g>
+</svg>
